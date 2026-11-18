@@ -295,7 +295,7 @@
 
   if (reduced) return;
 
-  var COVER_MS = 800; /* hold until the mark finishes its draw, then lift at once */
+  var COVER_MS = 1180; /* hold until the mark finishes its draw, then lift at once */
   var run = 0;
 
   var fetchPage = function (url, my, ok, bad) {
