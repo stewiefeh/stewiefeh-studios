@@ -99,30 +99,103 @@
     document.documentElement.classList.add("cur");
     var r = document.documentElement;
     /* rebuild the cursor chrome so every page carries the current design */
-    cur.innerHTML = '<span class="c-arrow"><svg viewBox="0 0 28 28" aria-hidden="true">' +
-      '<path class="c-body" d="M6 2 L6 21 L10.8 17 L13.6 24.2 L17 22.8 L14.2 16.4 L21 15.8 Z"/>' +
-      '<path class="c-slit" d="M9.4 6.2 L9.4 15.4"/></svg></span>' +
+    cur.innerHTML = '<span class="c-arrow"><span class="c-nib"><svg viewBox="0 0 30 30" aria-hidden="true">' +
+      '<path class="c-body" d="M5.81 5.81 L6.4 6.61 L6.96 7.4 L7.5 8.18 L8 8.95 L8.48 9.7 L8.92 10.45 L9.34 11.18 L9.73 11.9 L10.09 12.61 L10.43 13.31 L10.73 14 L11 14.67 L11.25 15.34 L11.46 15.99 L11.64 16.67 L11.81 17.32 L11.98 17.93 L12.16 18.51 L12.33 19.05 L12.51 19.56 L12.68 20.04 L12.86 20.48 L13.04 20.89 L13.22 21.26 L13.4 21.61 L13.58 21.91 L13.76 22.19 L13.94 22.42 L14.46 22.99 L15.01 23.49 L15.57 23.92 L16.16 24.29 L16.76 24.6 L17.38 24.84 L18.02 25.02 L18.68 25.14 L19.36 25.19 L20.07 25.17 L20.78 25.1 L21.52 24.95 L22.28 24.75 L23.06 24.48 L23.58 23.75 L24.02 23.01 L24.37 22.28 L24.63 21.54 L24.8 20.79 L24.88 20.05 L24.88 19.3 L24.79 18.54 L24.62 17.78 L24.35 17.02 L24 16.26 L23.56 15.49 L23.04 14.72 L22.42 13.94 L22.19 13.76 L21.91 13.58 L21.61 13.4 L21.26 13.22 L20.89 13.04 L20.48 12.86 L20.04 12.68 L19.56 12.51 L19.05 12.33 L18.51 12.16 L17.93 11.98 L17.32 11.81 L16.67 11.64 L15.99 11.46 L15.34 11.25 L14.67 11 L14 10.73 L13.31 10.43 L12.61 10.09 L11.9 9.73 L11.18 9.34 L10.45 8.92 L9.7 8.48 L8.95 8 L8.18 7.5 L7.4 6.96 L6.61 6.4 L5.81 5.81 Z"/>' +
+      '<path class="c-slit" d="M7.65 7.65 L16.41 16.41"/>' +
+      '<circle class="c-hole" cx="18.68" cy="18.68" r="1.5"/>' +
+'</svg></span></span>' +
       '<span class="c-pill"></span>' +
       '<span class="c-beam"><svg viewBox="0 0 13 28" aria-hidden="true">' +
       '<path d="M2.5 4 Q6.5 7 10.5 4"/><path d="M2.5 24 Q6.5 21 10.5 24"/><path d="M6.5 4 L6.5 24"/></svg></span>';
-    /* second layer trails the pointer: the pen flick and the drawn ring */
-    var soft = document.getElementById("cursor-soft");
+    /* the soft layer: one amber bead lagging a step behind the nib */
     if (!soft) {
       soft = document.createElement("div");
       soft.id = "cursor-soft";
       soft.setAttribute("aria-hidden", "true");
-      soft.innerHTML = '<svg class="c-ring" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="24"/></svg>' +
-        '<svg class="c-tail" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 3 Q11 7 16 19"/></svg>';
       document.body.appendChild(soft);
     }
+    soft.innerHTML = '<span class="c-dot"></span>';
+    var nib = cur.querySelector(".c-nib");
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var trail = null, ctx = null, cbrk = null, hovEl = null, dw = 0, dh = 0;
+    var sizeTrail = function () {
+      if (!trail) return;
+      dw = window.innerWidth; dh = window.innerHeight;
+      trail.width = dw; trail.height = dh;
+    };
+    if (fine && !reduce) {
+      trail = document.createElement("canvas");
+      trail.id = "inktrail";
+      trail.setAttribute("aria-hidden", "true");
+      document.body.appendChild(trail);
+      ctx = trail.getContext("2d");
+      cbrk = document.createElement("div");
+      cbrk.id = "cbrk";
+      cbrk.setAttribute("aria-hidden", "true");
+      cbrk.innerHTML = '<i class="t1"></i><i class="t2"></i><i class="t3"></i><i class="t4"></i>';
+      document.body.appendChild(cbrk);
+      sizeTrail();
+      window.addEventListener("resize", sizeTrail);
+    }
     var mx = -100, my = -100, sx = -100, sy = -100, px = -100, py = -100;
-    document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
+    var pmx = -100, tilt = 0, vel = 0, lastMove = Date.now();
+    var pts = [];
+    document.addEventListener("mousemove", function (e) {
+      mx = e.clientX; my = e.clientY; lastMove = Date.now();
+      if (r.classList.contains("c-rest")) r.classList.remove("c-rest");
+      if (ctx) {
+        var l = pts[pts.length - 1];
+        if (!l || Math.abs(l.x - mx) + Math.abs(l.y - my) > 3) {
+          pts.push({ x: mx, y: my, l: 1, c: r.classList.contains("c-link") ? "c" : "i" });
+          if (pts.length > 42) pts.shift();
+        }
+      }
+    });
     var tick = function () {
       cur.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
       sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
       soft.style.transform = "translate3d(" + sx.toFixed(1) + "px," + sy.toFixed(1) + "px,0)";
       px += (mx - px) * 0.14; py += (my - py) * 0.14;
       if (prev) prev.style.transform = "translate3d(" + px + "px," + py + "px,0)";
+      /* the nib carries like a pen: tilts into its own momentum, settles at rest */
+      vel = vel * 0.72 + (mx - pmx) * 0.28; pmx = mx;
+      var rest = Date.now() - lastMove > 2200;
+      if (rest && !r.classList.contains("c-rest") && !r.classList.contains("c-down")) r.classList.add("c-rest");
+      if (nib && !reduce) {
+        var want = rest ? 38 : Math.max(-14, Math.min(14, vel * 1.05));
+        tilt += (want - tilt) * 0.14;
+        nib.style.transform = "rotate(" + tilt.toFixed(2) + "deg)";
+      }
+      /* the path it takes is drawn on, then dries away */
+      if (ctx && pts.length) {
+        ctx.clearRect(0, 0, dw, dh);
+        ctx.lineWidth = 1.3; ctx.lineCap = "round";
+        for (var i = 1; i < pts.length; i++) {
+          var a = (pts[i].l + pts[i - 1].l) / 2;
+          if (a <= 0.02) continue;
+          ctx.globalAlpha = a * 0.8;
+          ctx.strokeStyle = pts[i].c === "c" ? "#c4830e" : "#14130f";
+          ctx.beginPath();
+          ctx.moveTo(pts[i - 1].x, pts[i - 1].y);
+          ctx.lineTo(pts[i].x, pts[i].y);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        for (var j = 0; j < pts.length; j++) pts[j].l -= 0.05;
+        while (pts.length && pts[0].l <= 0) pts.shift();
+      }
+      /* drafting corner-brackets draw on around whatever the nib is over */
+      if (cbrk) {
+        if (r.classList.contains("c-link") && hovEl && hovEl.isConnected) {
+          var b = hovEl.getBoundingClientRect();
+          cbrk.style.left = (b.left - 6) + "px";
+          cbrk.style.top = (b.top - 6) + "px";
+          cbrk.style.width = (b.width + 12) + "px";
+          cbrk.style.height = (b.height + 12) + "px";
+        } else {
+          cbrk.style.left = "-999px";
+        }
+      }
       requestAnimationFrame(tick);
     };
     tick();
@@ -131,6 +204,7 @@
       var row = e.target.closest(".workrow, .tile, .witem");
       var field = e.target.closest("input, textarea, [contenteditable]");
       var link = e.target.closest("a, button");
+      hovEl = (!row && !field && link) ? link : null;
       r.classList.toggle("c-row", !!row);
       r.classList.toggle("c-link", !row && !field && !!link);
       r.classList.toggle("c-beam", !!field);
@@ -145,10 +219,21 @@
         }
       }
     });
-    document.addEventListener("mousedown", function () { r.classList.add("c-down"); });
+    document.addEventListener("mousedown", function () {
+      r.classList.add("c-down");
+      if (ctx && mx > -50) {
+        var rip = document.createElement("span");
+        rip.className = "c-rip" + (r.classList.contains("c-link") ? " amber" : "");
+        rip.style.left = mx + "px"; rip.style.top = my + "px";
+        document.body.appendChild(rip);
+        rip.addEventListener("animationend", function () { if (rip.parentNode) rip.parentNode.removeChild(rip); });
+      }
+    });
     document.addEventListener("mouseup", function () { r.classList.remove("c-down"); });
     document.documentElement.addEventListener("mouseleave", function () {
       cur.style.opacity = "0"; soft.style.opacity = "0";
+      r.classList.remove("c-row", "c-link", "c-beam", "c-rest");
+      hovEl = null;
       if (prev) prev.classList.remove("show");
     });
     document.documentElement.addEventListener("mouseenter", function () {
@@ -249,7 +334,7 @@
     if (!doc || !doc.body) throw new Error("no body");
 
     /* the cursor, the soft layer and the veil are ours alone: never import a second copy */
-    var chrome = doc.body.querySelectorAll("#cursor, #cursor-soft, #preview, .veil");
+    var chrome = doc.body.querySelectorAll("#cursor, #cursor-soft, #preview, .veil, #inktrail, #cbrk");
     for (var k = 0; k < chrome.length; k++) chrome[k].parentNode.removeChild(chrome[k]);
 
     /* hold our chrome back, swap the document, put the chrome back */
@@ -262,6 +347,10 @@
     if (prev) { held.push(prev); prev.parentNode.removeChild(prev); }
     var soft = document.getElementById("cursor-soft");
     if (soft) { held.push(soft); soft.parentNode.removeChild(soft); }
+    var ink = document.getElementById("inktrail");
+    if (ink) { held.push(ink); ink.parentNode.removeChild(ink); }
+    var cb = document.getElementById("cbrk");
+    if (cb) { held.push(cb); cb.parentNode.removeChild(cb); }
 
     document.body.className = doc.body.className || "";
     document.body.innerHTML = "";
@@ -308,7 +397,7 @@
   var go = function (url, push) {
     var my = ++run;
     var t0 = Date.now();
-    root.classList.remove("c-row", "c-link", "c-beam", "c-down");
+    root.classList.remove("c-row", "c-link", "c-beam", "c-down", "c-rest");
     var pv = document.getElementById("preview");
     if (pv) pv.classList.remove("show");
     root.classList.remove("boot", "reveal");

@@ -385,24 +385,37 @@ p strong{color:var(--ink);font-weight:600}
   html.cur body{cursor:none}
   html.cur a,html.cur button{cursor:none}
   html.cur input,html.cur textarea{cursor:none}
-  html.cur #cursor,html.cur #cursor-soft{display:block}
+  html.cur #cursor,html.cur #cursor-soft,html.cur #inktrail,html.cur #cbrk{display:block}
   #preview{display:block}
 }
 html.fx-test body{cursor:none}
 html.fx-test #cursor,html.fx-test #cursor-soft,html.fx-test #preview{display:block !important}
-/* real pointer: a drawn arrow in the site's ink that follows the mouse
-   one-to-one, warms to amber over anything clickable, and hands the
-   work-row "view" call to the pill */
-/* real pointer, in the site's own hand: an ink arrow with a paper slit,
-   a pen flick that trails the pointer through the lag layer, a ring that
-   draws itself on over links the way the logo draws on, and a serif-italic
-   "view" pill over the work rows */
-#cursor-soft svg{position:absolute;display:block;overflow:visible}
+/* real pointer, in the studio's own hand: a pen nib that carries across
+   the page and tilts into its own momentum; the path it takes is drawn
+   onto the page as a thin ink line that dries away; over links the nib
+   warms amber, an amber bead lags a step behind, and drafting
+   corner-brackets draw on around the target; a click spreads a hairline
+   ring; at rest the nib is set down; work rows keep the serif-italic
+   "view" pill, text fields keep the drawn caret */
+#inktrail{position:fixed;inset:0;z-index:490;pointer-events:none;opacity:.9;transition:opacity .4s}
+html.c-rest #inktrail{opacity:0}
+#cbrk{position:fixed;z-index:498;pointer-events:none;opacity:0;transition:opacity .22s}
+html.c-link #cbrk{opacity:1}
+#cbrk i{position:absolute;width:13px;height:13px;border:0 solid var(--amber);transition:transform .3s var(--ease)}
+#cbrk .t1{left:0;top:0;border-left-width:1.4px;border-top-width:1.4px;transform:translate(-5px,-5px) scale(.55)}
+#cbrk .t2{right:0;top:0;border-right-width:1.4px;border-top-width:1.4px;transform:translate(5px,-5px) scale(.55)}
+#cbrk .t3{left:0;bottom:0;border-left-width:1.4px;border-bottom-width:1.4px;transform:translate(-5px,5px) scale(.55)}
+#cbrk .t4{right:0;bottom:0;border-right-width:1.4px;border-bottom-width:1.4px;transform:translate(5px,5px) scale(.55)}
+html.c-link #cbrk .t1{transform:none}
+html.c-link #cbrk .t2{transform:none;transition-delay:.045s}
+html.c-link #cbrk .t3{transform:none;transition-delay:.09s}
+html.c-link #cbrk .t4{transform:none;transition-delay:.135s}
 #cursor .c-arrow{
-  position:absolute;left:-6px;top:-4px;width:30px;height:30px;display:block;
+  position:absolute;left:-4px;top:-4px;width:30px;height:30px;display:block;
   filter:drop-shadow(0 1px 2px rgba(20,19,15,.38));
   transition:transform .18s var(--ease),opacity .2s;
 }
+#cursor .c-nib{display:block;width:100%;height:100%;transform-origin:5.8px 5.8px;will-change:transform}
 #cursor .c-arrow svg{display:block;width:100%;height:100%;overflow:visible}
 #cursor .c-arrow .c-body{
   fill:var(--ink);stroke:var(--paper);stroke-width:1.4;paint-order:stroke;
@@ -412,37 +425,31 @@ html.fx-test #cursor,html.fx-test #cursor-soft,html.fx-test #preview{display:blo
   fill:none;stroke:var(--paper);stroke-width:1.2;stroke-linecap:round;opacity:.9;
   transition:stroke .18s;
 }
-html.c-down #cursor .c-arrow{transform:scale(.82)}
+#cursor .c-arrow .c-hole{fill:var(--amber);transition:fill .18s}
 html.c-link #cursor .c-arrow{transform:scale(1.12) rotate(-4deg)}
 html.c-link #cursor .c-arrow .c-body{fill:var(--amber)}
 html.c-link #cursor .c-arrow .c-slit{stroke:var(--ink)}
+html.c-link #cursor .c-arrow .c-hole{fill:var(--ink)}
+html.c-down #cursor .c-arrow{transform:scale(.82)}
 html.c-row #cursor .c-arrow,html.c-beam #cursor .c-arrow{opacity:0}
-/* the ring: hairline amber, drawn on like the intro mark */
-#cursor-soft .c-ring{
-  left:-30px;top:-30px;width:60px;height:60px;opacity:0;transform:rotate(-100deg);
-  transition:opacity .25s;
+html.c-rest #cursor,html.c-rest #cursor-soft{opacity:.5}
+#cursor{transition:opacity .35s}
+#cursor-soft{transition:opacity .35s}
+/* the lagging bead: amber, a step behind the nib */
+#cursor-soft .c-dot{
+  position:absolute;left:-2px;top:-2px;width:4px;height:4px;border-radius:50%;
+  background:var(--amber);opacity:.5;transition:opacity .25s;
 }
-#cursor-soft .c-ring circle{
-  fill:none;stroke:var(--amber);stroke-width:1.4;stroke-linecap:round;
-  stroke-dasharray:151;stroke-dashoffset:151;
-  transition:stroke-dashoffset .55s var(--ease);
+html.c-link #cursor-soft .c-dot{opacity:.95}
+html.c-row #cursor-soft .c-dot,html.c-beam #cursor-soft .c-dot{opacity:0}
+/* a click spreads one hairline ring */
+.c-rip{
+  position:fixed;z-index:497;pointer-events:none;width:46px;height:46px;border-radius:50%;
+  border:1.3px solid var(--ink);transform:translate(-50%,-50%) scale(.16);opacity:.5;
+  animation:c-rip .55s var(--ease) forwards;
 }
-html.c-link #cursor-soft .c-ring{opacity:1}
-html.c-link #cursor-soft .c-ring circle{stroke-dashoffset:0}
-html.c-row #cursor-soft .c-ring,html.c-beam #cursor-soft .c-ring{opacity:0}
-/* the pen flick: ink dragged behind the nib, warming amber over links */
-#cursor-soft .c-tail{
-  left:-1px;top:-2px;width:26px;height:26px;opacity:.5;
-  transition:opacity .3s,transform .35s var(--ease);
-}
-#cursor-soft .c-tail path{
-  fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;
-  transition:stroke .25s;
-}
-html.c-link #cursor-soft .c-tail{opacity:.95;transform:translate(5px,5px) scale(1.18)}
-html.c-link #cursor-soft .c-tail path{stroke:var(--amber)}
-html.c-row #cursor-soft .c-tail,html.c-beam #cursor-soft .c-tail{opacity:0}
-html.c-down #cursor-soft .c-tail{transform:scale(.88)}
+.c-rip.amber{border-color:var(--amber)}
+@keyframes c-rip{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
 /* the I-beam: a drawn caret over text fields */
 #cursor .c-beam{
   position:absolute;left:3px;top:-14px;width:13px;height:28px;opacity:0;
