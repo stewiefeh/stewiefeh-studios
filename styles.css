@@ -482,7 +482,7 @@ html.c-row #cursor .c-pill{width:68px;height:38px;opacity:1}
 
 /* live demo window: the actual site, framed in the studio's chrome */
 .case-live{
-  margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  margin:0 0 clamp(44px,7vw,84px);border:1px solid var(--line);border-radius:16px;overflow:hidden;
   background:var(--paper);box-shadow:0 30px 70px rgba(20,19,15,.14);
 }
 .cl-bar{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--line)}
