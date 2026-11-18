@@ -99,12 +99,18 @@
     var cur = document.getElementById("cursor");
     var prev = document.getElementById("preview");
     if (!cur) return;
-    var mx = -100, my = -100, cx = -100, cy = -100, px = -100, py = -100;
+    var ring = cur.querySelector(".c-ring");
+    var dot = cur.querySelector(".c-dot");
+    var pill = cur.querySelector(".c-pill");
+    var mx = -100, my = -100, rx = -100, ry = -100, dx = -100, dy = -100, px = -100, py = -100;
     document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
     var tick = function () {
-      cx += (mx - cx) * 0.25; cy += (my - cy) * 0.25;
+      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+      dx += (mx - dx) * 0.45; dy += (my - dy) * 0.45;
       px += (mx - px) * 0.14; py += (my - py) * 0.14;
-      cur.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+      ring.style.transform = "translate3d(" + rx + "px," + ry + "px,0) translate(-50%,-50%)";
+      dot.style.transform = "translate3d(" + dx + "px," + dy + "px,0) translate(-50%,-50%)";
+      if (pill) pill.style.transform = "translate3d(" + rx + "px," + ry + "px,0) translate(-50%,-50%)";
       if (prev) prev.style.transform = "translate3d(" + px + "px," + py + "px,0)";
       requestAnimationFrame(tick);
     };
@@ -149,4 +155,30 @@
   } else {
     start();
   }
+})();
+
+/* page transitions: intercept same-site link clicks, sweep the veil in, then go.
+   the new page plays its own reveal on load (CSS, no JS timing needed). */
+(function () {
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) document.documentElement.classList.add("bf");
+  });
+  if (reduced) return;
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (href.charAt(0) === "#" || /^(mailto|tel):/i.test(href)) return;
+    if (a.target === "_blank") return;
+    var url;
+    try { url = new URL(href, location.href); } catch (err) { return; }
+    if (url.host !== location.host) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    e.preventDefault();
+    document.documentElement.classList.add("leaving");
+    setTimeout(function () { location.href = url.href; }, 330);
+  });
 })();
