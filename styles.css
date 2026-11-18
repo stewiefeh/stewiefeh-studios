@@ -205,7 +205,7 @@ p strong{color:var(--ink);font-weight:600}
 .workrow::after{
   content:"→";position:absolute;right:6px;top:50%;margin-top:-.6em;
   color:var(--amber);font-size:1.5rem;
-  opacity:0;transform:translateX(-14px);
+  opacity:.3;transform:translateX(-10px);
   transition:opacity .25s var(--ease),transform .25s var(--ease);
 }
 .workrow:hover::after{opacity:1;transform:translateX(0)}
