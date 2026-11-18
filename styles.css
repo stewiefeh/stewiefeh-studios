@@ -107,11 +107,11 @@ p strong{color:var(--ink);font-weight:600}
 .btn-solid::before{background:var(--amber)}
 .btn-solid:hover{border-color:var(--amber)}
 .btn-ghost{background:transparent;color:var(--ink)}
-.btn-ghost::before{background:var(--ink)}
-.btn-ghost:hover{color:var(--paper)}
+.btn-ghost::before{background:var(--amber)}
+.btn-ghost:hover{color:#fff;border-color:var(--amber)}
 .btn-amber{background:var(--amber);border-color:var(--amber);color:#fff}
-.btn-amber::before{background:var(--ink)}
-.btn-amber:hover{border-color:var(--ink)}
+.btn-amber::before{background:var(--paper)}
+.btn-amber:hover{border-color:var(--amber);color:var(--ink)}
 
 /* dropdown panel */
 .nav-panel{
