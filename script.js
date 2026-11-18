@@ -93,7 +93,6 @@
 (function () {
   "use strict";
   var start = function () {
-    "use strict";
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     var motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var fxTest = window.location.search.indexOf("fxtest=1") > -1;
@@ -143,7 +142,9 @@
             "translate(" + (((e.clientX - r.left - r.width / 2) / r.width) * 12).toFixed(1) + "px," +
                            (((e.clientY - r.top - r.height / 2) / r.height) * 9).toFixed(1) + "px)";
         });
-        b.addEventListener("mouseleave", function () { b.style.transform = "";
+        b.addEventListener("mouseleave", function () { b.style.transform = ""; });
+      })(magnetic[m]);
+    }
   };
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", start);
