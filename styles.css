@@ -370,6 +370,7 @@ p strong{color:var(--ink);font-weight:600}
 
 /* ---------- studio layer: scroll-ink headlines, cursor, work previews, magnetic ---------- */
 #cursor{display:none;position:fixed;left:0;top:0;z-index:500;pointer-events:none;will-change:transform}
+#cursor-soft{display:none;position:fixed;left:0;top:0;z-index:499;pointer-events:none;will-change:transform}
 #preview{display:none;position:fixed;left:0;top:0;z-index:79;pointer-events:none;will-change:transform}
 @property --ink-p{syntax:"<percentage>";initial-value:0%;inherits:false}
 .ink{
@@ -383,29 +384,72 @@ p strong{color:var(--ink);font-weight:600}
 @media (hover:hover) and (pointer:fine){
   html.cur body{cursor:none}
   html.cur a,html.cur button{cursor:none}
-  html.cur input,html.cur textarea,html.cur select{cursor:text}
-  html.cur #cursor{display:block}
+  html.cur input,html.cur textarea{cursor:none}
+  html.cur #cursor,html.cur #cursor-soft{display:block}
   #preview{display:block}
 }
 html.fx-test body{cursor:none}
-html.fx-test #cursor,html.fx-test #preview{display:block !important}
+html.fx-test #cursor,html.fx-test #cursor-soft,html.fx-test #preview{display:block !important}
 /* real pointer: a drawn arrow in the site's ink that follows the mouse
    one-to-one, warms to amber over anything clickable, and hands the
    work-row "view" call to the pill */
+/* real pointer, in the site's own hand: an ink arrow with a paper slit,
+   a pen flick that trails the pointer through the lag layer, a ring that
+   draws itself on over links the way the logo draws on, and a serif-italic
+   "view" pill over the work rows */
+#cursor-soft svg{position:absolute;display:block;overflow:visible}
 #cursor .c-arrow{
-  position:absolute;left:-5px;top:-3px;width:27px;height:27px;display:block;
+  position:absolute;left:-6px;top:-4px;width:30px;height:30px;display:block;
   filter:drop-shadow(0 1px 2px rgba(20,19,15,.38));
   transition:transform .18s var(--ease),opacity .2s;
 }
-#cursor .c-arrow svg{display:block;width:100%;height:100%}
-#cursor .c-arrow path{
+#cursor .c-arrow svg{display:block;width:100%;height:100%;overflow:visible}
+#cursor .c-arrow .c-body{
   fill:var(--ink);stroke:var(--paper);stroke-width:1.4;paint-order:stroke;
   transition:fill .18s;
 }
-#cursor.down .c-arrow{transform:scale(.86)}
-#cursor.link .c-arrow{transform:scale(1.16)}
-#cursor.link .c-arrow path{fill:var(--amber)}
-#cursor.row .c-arrow{opacity:0}
+#cursor .c-arrow .c-slit{
+  fill:none;stroke:var(--paper);stroke-width:1.2;stroke-linecap:round;opacity:.9;
+  transition:stroke .18s;
+}
+html.c-down #cursor .c-arrow{transform:scale(.82)}
+html.c-link #cursor .c-arrow{transform:scale(1.12) rotate(-4deg)}
+html.c-link #cursor .c-arrow .c-body{fill:var(--amber)}
+html.c-link #cursor .c-arrow .c-slit{stroke:var(--ink)}
+html.c-row #cursor .c-arrow,html.c-beam #cursor .c-arrow{opacity:0}
+/* the ring: hairline amber, drawn on like the intro mark */
+#cursor-soft .c-ring{
+  left:-30px;top:-30px;width:60px;height:60px;opacity:0;transform:rotate(-100deg);
+  transition:opacity .25s;
+}
+#cursor-soft .c-ring circle{
+  fill:none;stroke:var(--amber);stroke-width:1.4;stroke-linecap:round;
+  stroke-dasharray:151;stroke-dashoffset:151;
+  transition:stroke-dashoffset .55s var(--ease);
+}
+html.c-link #cursor-soft .c-ring{opacity:1}
+html.c-link #cursor-soft .c-ring circle{stroke-dashoffset:0}
+html.c-row #cursor-soft .c-ring,html.c-beam #cursor-soft .c-ring{opacity:0}
+/* the pen flick: ink dragged behind the nib, warming amber over links */
+#cursor-soft .c-tail{
+  left:-1px;top:-2px;width:26px;height:26px;opacity:.5;
+  transition:opacity .3s,transform .35s var(--ease);
+}
+#cursor-soft .c-tail path{
+  fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;
+  transition:stroke .25s;
+}
+html.c-link #cursor-soft .c-tail{opacity:.95;transform:translate(5px,5px) scale(1.18)}
+html.c-link #cursor-soft .c-tail path{stroke:var(--amber)}
+html.c-row #cursor-soft .c-tail,html.c-beam #cursor-soft .c-tail{opacity:0}
+html.c-down #cursor-soft .c-tail{transform:scale(.88)}
+/* the I-beam: a drawn caret over text fields */
+#cursor .c-beam{
+  position:absolute;left:3px;top:-14px;width:13px;height:28px;opacity:0;
+  transition:opacity .2s;
+}
+#cursor .c-beam path{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}
+html.c-beam #cursor .c-beam{opacity:1}
 #cursor .c-pill{
   position:absolute;left:0;top:0;width:0;height:0;border-radius:999px;
   background:var(--ink);color:var(--paper);
@@ -414,7 +458,7 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
   transition:width .35s var(--ease),height .35s var(--ease),opacity .2s;
 }
 #cursor .c-pill::after{content:"view"}
-#cursor.row .c-pill{width:68px;height:38px;opacity:1}
+html.c-row #cursor .c-pill{width:68px;height:38px;opacity:1}
 #preview .p-card{
   transform:translate(-50%,-56%) scale(.9) rotate(-2.5deg);
   width:min(300px,26vw);aspect-ratio:3/2;border-radius:14px;overflow:hidden;

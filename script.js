@@ -97,10 +97,30 @@
     var prev = document.getElementById("preview");
     if (!cur) return;
     document.documentElement.classList.add("cur");
-    var mx = -100, my = -100, px = -100, py = -100;
+    var r = document.documentElement;
+    /* rebuild the cursor chrome so every page carries the current design */
+    cur.innerHTML = '<span class="c-arrow"><svg viewBox="0 0 28 28" aria-hidden="true">' +
+      '<path class="c-body" d="M6 2 L6 21 L10.8 17 L13.6 24.2 L17 22.8 L14.2 16.4 L21 15.8 Z"/>' +
+      '<path class="c-slit" d="M9.4 6.2 L9.4 15.4"/></svg></span>' +
+      '<span class="c-pill"></span>' +
+      '<span class="c-beam"><svg viewBox="0 0 13 28" aria-hidden="true">' +
+      '<path d="M2.5 4 Q6.5 7 10.5 4"/><path d="M2.5 24 Q6.5 21 10.5 24"/><path d="M6.5 4 L6.5 24"/></svg></span>';
+    /* second layer trails the pointer: the pen flick and the drawn ring */
+    var soft = document.getElementById("cursor-soft");
+    if (!soft) {
+      soft = document.createElement("div");
+      soft.id = "cursor-soft";
+      soft.setAttribute("aria-hidden", "true");
+      soft.innerHTML = '<svg class="c-ring" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="24"/></svg>' +
+        '<svg class="c-tail" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 3 Q11 7 16 19"/></svg>';
+      document.body.appendChild(soft);
+    }
+    var mx = -100, my = -100, sx = -100, sy = -100, px = -100, py = -100;
     document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
     var tick = function () {
       cur.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+      sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+      soft.style.transform = "translate3d(" + sx.toFixed(1) + "px," + sy.toFixed(1) + "px,0)";
       px += (mx - px) * 0.14; py += (my - py) * 0.14;
       if (prev) prev.style.transform = "translate3d(" + px + "px," + py + "px,0)";
       requestAnimationFrame(tick);
@@ -109,9 +129,11 @@
     document.addEventListener("mouseover", function (e) {
       if (!e.target || !e.target.closest) return;
       var row = e.target.closest(".workrow, .tile, .witem");
-      var link = e.target.closest("a,button");
-      cur.classList.toggle("row", !!row);
-      cur.classList.toggle("link", !row && !!link);
+      var field = e.target.closest("input, textarea, [contenteditable]");
+      var link = e.target.closest("a, button");
+      r.classList.toggle("c-row", !!row);
+      r.classList.toggle("c-link", !row && !field && !!link);
+      r.classList.toggle("c-beam", !!field);
       if (prev) {
         if (row) {
           var idx = parseInt(row.getAttribute("data-preview") || "0", 10);
@@ -123,13 +145,15 @@
         }
       }
     });
-    document.addEventListener("mousedown", function () { cur.classList.add("down"); });
-    document.addEventListener("mouseup", function () { cur.classList.remove("down"); });
+    document.addEventListener("mousedown", function () { r.classList.add("c-down"); });
+    document.addEventListener("mouseup", function () { r.classList.remove("c-down"); });
     document.documentElement.addEventListener("mouseleave", function () {
-      cur.style.opacity = "0";
+      cur.style.opacity = "0"; soft.style.opacity = "0";
       if (prev) prev.classList.remove("show");
     });
-    document.documentElement.addEventListener("mouseenter", function () { cur.style.opacity = ""; });
+    document.documentElement.addEventListener("mouseenter", function () {
+      cur.style.opacity = ""; soft.style.opacity = "";
+    });
     bindMagnetic();
     document.addEventListener("page:swap", bindMagnetic);
   };
@@ -224,6 +248,10 @@
     var doc = new DOMParser().parseFromString(text, "text/html");
     if (!doc || !doc.body) throw new Error("no body");
 
+    /* the cursor, the soft layer and the veil are ours alone: never import a second copy */
+    var chrome = doc.body.querySelectorAll("#cursor, #cursor-soft, #preview, .veil");
+    for (var k = 0; k < chrome.length; k++) chrome[k].parentNode.removeChild(chrome[k]);
+
     /* hold our chrome back, swap the document, put the chrome back */
     var held = [];
     var veil = document.body.querySelector(".veil");
@@ -232,6 +260,8 @@
     if (cur) { held.push(cur); cur.parentNode.removeChild(cur); }
     var prev = document.getElementById("preview");
     if (prev) { held.push(prev); prev.parentNode.removeChild(prev); }
+    var soft = document.getElementById("cursor-soft");
+    if (soft) { held.push(soft); soft.parentNode.removeChild(soft); }
 
     document.body.className = doc.body.className || "";
     document.body.innerHTML = "";
@@ -278,8 +308,7 @@
   var go = function (url, push) {
     var my = ++run;
     var t0 = Date.now();
-    var c = document.getElementById("cursor");
-    if (c) c.classList.remove("row", "link");
+    root.classList.remove("c-row", "c-link", "c-beam", "c-down");
     var pv = document.getElementById("preview");
     if (pv) pv.classList.remove("show");
     root.classList.remove("boot", "reveal");
