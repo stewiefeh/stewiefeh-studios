@@ -384,6 +384,8 @@ p strong{color:var(--ink);font-weight:600}
   #cursor{display:block}
   #preview{display:block}
 }
+html.fx-test body{cursor:none}
+html.fx-test #cursor,html.fx-test #preview{display:block}
 #cursor{display:none;position:fixed;left:0;top:0;z-index:80;pointer-events:none;will-change:transform}
 #cursor .c-dot{
   transform:translate(-50%,-50%);
