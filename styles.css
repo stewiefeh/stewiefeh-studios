@@ -99,7 +99,7 @@ p strong{color:var(--ink);font-weight:600}
 .btn:active{transform:scale(.97)}
 .btn>*{position:relative;z-index:1}
 .btn::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;
   transform:translateY(101%);transition:transform .32s var(--ease);
 }
 .btn:hover::before{transform:translateY(0)}

@@ -137,8 +137,8 @@
         b.addEventListener("mousemove", function (e) {
           var r = b.getBoundingClientRect();
           b.style.transform =
-            "translate(" + (((e.clientX - r.left - r.width / 2) / r.width) * 12).toFixed(1) + "px," +
-                           (((e.clientY - r.top - r.height / 2) / r.height) * 9).toFixed(1) + "px)";
+            "translate(" + (((e.clientX - r.left - r.width / 2) / r.width) * 6).toFixed(1) + "px," +
+                           (((e.clientY - r.top - r.height / 2) / r.height) * 4).toFixed(1) + "px)";
         });
         b.addEventListener("mouseleave", function () { b.style.transform = ""; });
       })(magnetic[m]);
