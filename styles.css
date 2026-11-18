@@ -711,3 +711,15 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
 @supports (width: 1cqw){
   .foot-mark{font-size:clamp(2.4rem,9.6cqw,7.35rem)}
 }
+
+/* polish pass 2: mobile display type + long-url overflow */
+/* hero words are one unbreakable line each, so the minimum size has to
+   fit the longest word ("Straightforward") inside a 390px column */
+@media (max-width:480px){
+  h1{font-size:clamp(2.1rem,9vw,2.9rem)}
+  .case-display{font-size:clamp(2.1rem,9vw,2.9rem)}
+}
+/* live-at urls are unbreakable strings and blew the phone viewport wide */
+.meta-strip dd{overflow-wrap:anywhere}
+/* safety net: nothing should ever widen the page sideways */
+html,body{overflow-x:clip}
