@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — stewiefeh studios</title>
+<meta name="description" content="Start a project with stewiefeh studios. Tell me about your business and I'll come back with a plan and a price, usually within a day.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="stewiefeh studios, home">
+      <svg viewBox="-3 -10 116 116" aria-hidden="true"><path d="M 91 17 C 85 5, 69 -1, 53 3 C 37 7, 29 19, 35 29 C 41 39, 59 39, 69 47 C 79 55, 81 71, 71 79 C 61 87, 43 87, 33 77" fill="none" stroke="#c4830e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M 84 24 C 78 12, 62 6, 46 10 C 30 14, 22 26, 28 36 C 34 46, 52 46, 62 54 C 72 62, 74 78, 64 86 C 54 94, 36 94, 26 84" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="brand-name">stewiefeh <span>studios</span></span>
+    </a>
+    <div class="head-actions">
+      <a class="btn btn-solid" href="contact.html">Start a project</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="navpanel" aria-label="Menu"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-panel" id="navpanel" aria-label="Main">
+  <ul>
+    <li><a class="nav-link" href="index.html"><b>Home</b><span>where it starts</span></a></li>
+    <li><a class="nav-link" href="services.html"><b>Services</b><span>pricing, process, questions</span></a></li>
+    <li><a class="nav-link" href="work.html"><b>Work</b><span>demo sites, built from zero</span></a></li>
+    <li><a class="nav-link" href="contact.html" aria-current="page"><b>Contact</b><span>start a project</span></a></li>
+  </ul>
+  <div class="nav-cta-row">
+    <a class="btn btn-amber" href="services.html">See the pricing</a>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero" style="padding-bottom:clamp(28px,4vw,48px)">
+    <div class="wrap">
+      <h1 class="reveal">Tell me about your business.</h1>
+      <p class="lede reveal d1">I usually reply within a day. Include the business name and what you'd want the site to do, and I'll come back with a plan and a price.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap" style="display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(40px,6vw,80px)" class="two-col">
+      <div>
+        <form data-contact-form>
+          <div class="field">
+            <label for="c-business">Business name</label>
+            <input id="c-business" name="business" type="text" required autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="c-name">Your name</label>
+            <input id="c-name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="c-message">What would you want the site to do?</label>
+            <textarea id="c-message" name="message" required placeholder="Example: we're a pizzeria in Marlton. People search us on their phones and call to order. We want the hours, menu, and a tap-to-call button front and center."></textarea>
+          </div>
+          <button class="btn btn-solid" type="submit">Send it</button>
+          <p class="form-note" data-contact-done hidden>Thanks! Your email app should be open with your message ready to send.</p>
+          <p class="form-note">Hitting send opens your email app with the message filled in and addressed to me. No forms sitting in a queue.</p>
+        </form>
+      </div>
+      <div>
+        <h3 style="margin-bottom:14px">One person, start to finish</h3>
+        <div class="about-para" style="max-width:none">
+          <p>I'm Stephen Fehon. I design, write, and code every site myself, which means the person you talk to is the person building your site. Nothing gets lost between a sales call and a production team, because there is no production team.</p>
+          <p style="margin-top:1.2em">I build with modern tools and hand-written code, I test on real phones, and I keep sites fast enough that customers on a bad connection still get them. Every project gets the same care whether it's a single page or a full site.</p>
+        </div>
+        <h3 style="margin:34px 0 14px">Worked with me?</h3>
+        <form data-review-form>
+          <div class="field">
+            <label for="r-rating">Your rating</label>
+            <select id="r-rating" name="rating" style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit">
+              <option value="5" selected>★★★★★</option>
+              <option value="4">★★★★</option>
+              <option value="3">★★★</option>
+              <option value="2">★★</option>
+              <option value="1">★</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="r-name">Your name</label>
+            <input id="r-name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="r-site">The website built for you</label>
+            <input id="r-site" name="site" type="text" placeholder="example.com">
+          </div>
+          <div class="field">
+            <label for="r-opinion">Your opinion</label>
+            <textarea id="r-opinion" name="opinion" required></textarea>
+          </div>
+          <button class="btn btn-ghost" type="submit">Send my review</button>
+          <p class="form-note" data-review-done hidden>Thanks! Your email app should be open with the review ready to send.</p>
+          <p class="form-note">It goes live after a quick read, so everything here stays real.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg viewBox="-3 -10 116 116" aria-hidden="true"><path d="M 91 17 C 85 5, 69 -1, 53 3 C 37 7, 29 19, 35 29 C 41 39, 59 39, 69 47 C 79 55, 81 71, 71 79 C 61 87, 43 87, 33 77" fill="none" stroke="#c4830e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M 84 24 C 78 12, 62 6, 46 10 C 30 14, 22 26, 28 36 C 34 46, 52 46, 62 54 C 72 62, 74 78, 64 86 C 54 94, 36 94, 26 84" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Custom websites built from scratch for local businesses in South Jersey. A free sample of your own site before you pay anything.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="work.html">Work</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Say hello</h4>
+        <a href="mailto:stephenfehon@gmail.com">stephenfehon@gmail.com</a>
+        <p style="padding:4px 0">South Jersey, NJ</p>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 stewiefeh studios</span>
+      <span>Open for new projects</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
