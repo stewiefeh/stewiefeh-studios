@@ -97,11 +97,11 @@
       var d = reduce ? 1 : draw;
 
       // fine grid, revealed left-to-right
-      var step = 72;
+      var step = 120;
       if (d > 0) {
         var cols = Math.ceil(W / step), rows = Math.ceil(H / step);
         var maxCol = Math.floor(cols * d);
-        ctx.strokeStyle = "rgba(233,231,224,0.045)";
+        ctx.strokeStyle = "rgba(233,231,224,0.035)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         for (var c = 0; c <= maxCol; c++) { var x = c * step + 0.5; ctx.moveTo(x, 0); ctx.lineTo(x, H); }
@@ -111,17 +111,10 @@
         ctx.stroke();
       }
 
-      // heavier quarter guides
-      ctx.strokeStyle = "rgba(233,231,224,0.09)";
-      ctx.beginPath();
-      var q = Math.floor((W / 4) * d) + 0.5;
-      for (var i = 1; i < 4; i++) { var qx = (W / 4) * i; if (qx <= q) { ctx.moveTo(qx, 0); ctx.lineTo(qx, H); } }
-      ctx.stroke();
-
       // construction circle + arc, drawn like a compass sweep
       if (d > 0) {
-        var cx = W * 0.72, cy = H * 0.42, R = Math.min(W, H) * 0.34;
-        ctx.strokeStyle = "rgba(217,154,43,0.16)";
+        var cx = W * 0.84, cy = H * 0.38, R = Math.min(W, H) * 0.26;
+        ctx.strokeStyle = "rgba(217,154,43,0.11)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(cx, cy, R, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * d);
@@ -130,22 +123,17 @@
         ctx.beginPath();
         ctx.arc(cx, cy, R * 0.62, Math.PI * 0.7, Math.PI * 0.7 + Math.PI * 1.3 * d);
         ctx.stroke();
-        // baseline through the circle
-        ctx.strokeStyle = "rgba(233,231,224,0.10)";
-        ctx.beginPath();
-        ctx.moveTo(cx - R * 1.25, cy); ctx.lineTo(cx - R * 1.25 + R * 2.5 * d, cy);
-        ctx.stroke();
       }
 
       // pointer crosshair
       if (!reduce && finePointer && px >= 0) {
-        ctx.strokeStyle = "rgba(217,154,43,0.22)";
+        ctx.strokeStyle = "rgba(217,154,43,0.16)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(px + 0.5, 0); ctx.lineTo(px + 0.5, H);
         ctx.moveTo(0, py + 0.5); ctx.lineTo(W, py + 0.5);
         ctx.stroke();
-        ctx.strokeStyle = "rgba(217,154,43,0.5)";
+        ctx.strokeStyle = "rgba(217,154,43,0.4)";
         ctx.beginPath();
         ctx.arc(px, py, 9, 0, Math.PI * 2);
         ctx.stroke();
