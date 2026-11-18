@@ -108,6 +108,7 @@
       '<span class="c-beam"><svg viewBox="0 0 13 28" aria-hidden="true">' +
       '<path d="M2.5 4 Q6.5 7 10.5 4"/><path d="M2.5 24 Q6.5 21 10.5 24"/><path d="M6.5 4 L6.5 24"/></svg></span>';
     /* the soft layer: one amber bead lagging a step behind the nib */
+    var soft = document.getElementById("cursor-soft");
     if (!soft) {
       soft = document.createElement("div");
       soft.id = "cursor-soft";
