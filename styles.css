@@ -480,6 +480,34 @@ html.c-row #cursor .c-pill{width:68px;height:38px;opacity:1}
   }
 }
 
+/* live demo window: the actual site, framed in the studio's chrome */
+.case-live{
+  margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:var(--paper);box-shadow:0 30px 70px rgba(20,19,15,.14);
+}
+.cl-bar{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.cl-dots{display:flex;gap:6px;flex:none}
+.cl-dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.cl-dots i:first-child{background:var(--amber)}
+.cl-url{
+  flex:1;min-width:0;display:flex;align-items:center;gap:9px;
+  font-size:.8rem;color:var(--muted);background:#f1eee6;
+  border-radius:8px;padding:7px 13px;
+}
+.cl-url span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cl-pulse{width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+  animation:clpulse 1.6s ease-out infinite}
+@keyframes clpulse{0%{box-shadow:0 0 0 0 rgba(196,131,14,.38)}70%{box-shadow:0 0 0 6px rgba(196,131,14,0)}100%{box-shadow:0 0 0 0 rgba(196,131,14,0)}}
+.cl-open{flex:none;font-size:.85rem;color:var(--ink);text-underline-offset:3px}
+.cl-open:hover{color:var(--amber)}
+.cl-stage{position:relative;height:clamp(420px,58vh,700px);background:var(--paper)}
+.cl-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:640px){
+  .cl-open{display:none}
+  .cl-stage{height:min(72vh,560px)}
+}
+@media (prefers-reduced-motion: reduce){.cl-pulse{animation:none}}
+
 /* =========================================================
    editorial rebuild (phase 1): left rail, display hero,
    build-in moment, case tiles, work index, slate close
