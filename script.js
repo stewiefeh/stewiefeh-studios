@@ -95,9 +95,7 @@
   var start = function () {
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     var motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var fxTest = window.location.search.indexOf("fxtest=1") > -1;
-    if (fxTest && !fine) document.documentElement.classList.add("fx-test");
-    if ((!fine || !motion) && !fxTest) return;
+    if (!fine || !motion) return;
     var cur = document.getElementById("cursor");
     var prev = document.getElementById("preview");
     if (!cur) return;
