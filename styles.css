@@ -75,11 +75,11 @@ p strong{color:var(--ink);font-weight:600}
 
 .head-actions{display:flex;align-items:center;gap:12px}
 .menu-btn{
-  width:44px;height:44px;border:1px solid var(--line);background:transparent;
+  width:44px;height:44px;border:1px solid transparent;background:var(--amber);
   border-radius:50%;cursor:pointer;position:relative;flex:none;
-  transition:border-color .2s,transform .2s;
+  transition:background .2s,transform .2s;
 }
-.menu-btn:hover{border-color:var(--ink);transform:scale(1.06)}
+.menu-btn:hover{background:var(--amber-deep);transform:scale(1.06)}
 .menu-btn i{
   position:absolute;left:13px;right:13px;height:1.6px;background:var(--ink);
   border-radius:2px;transition:transform .3s cubic-bezier(.6,0,.2,1),top .3s cubic-bezier(.6,0,.2,1);
