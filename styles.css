@@ -773,3 +773,12 @@ body.ready .hero-title em { color: #16130a; }
   .section-title::after { transform: scaleX(1); transition: none; }
   .plan, .plan-featured { transition: none; }
 }
+
+
+/* ---------- logo: construction line under the inked line ---------- */
+.brand-mark .mk-amb { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mk-draw 0.7s ease-out 0.2s forwards; }
+.brand-mark .mk-ink { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mk-draw 0.85s cubic-bezier(.65,0,.3,1) 0.6s forwards; }
+@keyframes mk-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark .mk-amb, .brand-mark .mk-ink { animation: none; stroke-dashoffset: 0; }
+}
