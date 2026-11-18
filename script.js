@@ -2,91 +2,70 @@
 (function () {
   "use strict";
 
-  /* header hairline once scrolled */
-  var head = document.querySelector(".site-head");
-  if (head) {
-    var onScroll = function () {
-      head.classList.toggle("scrolled", window.scrollY > 8);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-  }
+  /* header hairline: one passive listener, always reads the live header */
+  var headTick = function () {
+    var h = document.querySelector(".site-head");
+    if (h) h.classList.toggle("scrolled", window.scrollY > 8);
+  };
+  headTick();
+  window.addEventListener("scroll", headTick, { passive: true });
+  document.addEventListener("page:swap", headTick);
 
-  /* dropdown nav: open, close, esc, click-out, one focusable control on every device */
-  var btn = document.querySelector(".menu-btn");
-  var panel = document.querySelector(".nav-panel");
-  if (btn && panel) {
-    var setOpen = function (open) {
+  /* dropdown nav: delegated, so it survives soft page swaps */
+  var closeMenu = function () {
+    var b = document.querySelector(".menu-btn");
+    var p = document.querySelector(".nav-panel");
+    if (b) b.setAttribute("aria-expanded", "false");
+    if (p) p.classList.remove("open");
+  };
+  document.addEventListener("click", function (e) {
+    if (!e.target || !e.target.closest) return;
+    var btn = e.target.closest(".menu-btn");
+    if (btn) {
+      var open = btn.getAttribute("aria-expanded") !== "true";
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      panel.classList.toggle("open", open);
+      var p = document.querySelector(".nav-panel");
+      if (p) p.classList.toggle("open", open);
+      return;
+    }
+    var panel = document.querySelector(".nav-panel");
+    if (panel && panel.classList.contains("open")) {
+      if (e.target.closest(".nav-panel a")) { closeMenu(); return; }
+      var b = document.querySelector(".menu-btn");
+      if (b && !b.contains(e.target) && !panel.contains(e.target)) closeMenu();
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  /* review + contact forms: mailto handoff, delegated */
+  document.addEventListener("submit", function (e) {
+    var form = e.target;
+    if (!form || !form.hasAttribute || (!form.hasAttribute("data-review-form") && !form.hasAttribute("data-contact-form"))) return;
+    e.preventDefault();
+    var get = function (n) {
+      var el = form.querySelector('[name="' + n + '"]');
+      return el ? el.value.trim() : "";
     };
-    btn.addEventListener("click", function () {
-      setOpen(btn.getAttribute("aria-expanded") !== "true");
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") setOpen(false);
-    });
-    document.addEventListener("click", function (e) {
-      if (
-        panel.classList.contains("open") &&
-        !panel.contains(e.target) &&
-        !btn.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    });
-    panel.addEventListener("click", function (e) {
-      if (e.target.closest("a")) setOpen(false);
-    });
-  }
-
-  /* review form: opens the visitor's email app with the review drafted (unchanged behavior) */
-  var form = document.querySelector("[data-review-form]");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var get = function (n) {
-        var el = form.querySelector('[name="' + n + '"]');
-        return el ? el.value.trim() : "";
-      };
-      var rating = get("rating") || "5";
-      var body =
-        "Review of stewiefeh studios\n\nName: " + get("name") +
+    var review = form.hasAttribute("data-review-form");
+    var body = review
+      ? "Review of stewiefeh studios\n\nName: " + get("name") +
         "\nSite built for me: " + get("site") +
-        "\nRating: " + rating + " / 5\n\n" + get("opinion");
-      var url =
-        "mailto:stephenfehon@gmail.com?subject=" +
-        encodeURIComponent("Studio review from " + (get("name") || "a client")) +
-        "&body=" + encodeURIComponent(body);
-      window.location.href = url;
-      var done = form.querySelector("[data-review-done]");
-      if (done) done.hidden = false;
-      form.reset();
-    });
-  }
-
-  /* contact form: same mailto handoff, no server needed */
-  var contact = document.querySelector("[data-contact-form]");
-  if (contact) {
-    contact.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var get = function (n) {
-        var el = contact.querySelector('[name="' + n + '"]');
-        return el ? el.value.trim() : "";
-      };
-      var body =
-        "Business: " + get("business") +
+        "\nRating: " + (get("rating") || "5") + " / 5\n\n" + get("opinion")
+      : "Business: " + get("business") +
         "\nName: " + get("name") +
         "\n\nWhat I'd want the site to do:\n" + get("message");
-      var url =
-        "mailto:stephenfehon@gmail.com?subject=" +
-        encodeURIComponent("New project: " + (get("business") || get("name") || "inquiry")) +
-        "&body=" + encodeURIComponent(body);
-      window.location.href = url;
-      var done = contact.querySelector("[data-contact-done]");
-      if (done) done.hidden = false;
-    });
-  }
+    var subject = review
+      ? "Studio review from " + (get("name") || "a client")
+      : "New project: " + (get("business") || get("name") || "inquiry");
+    window.location.href =
+      "mailto:stephenfehon@gmail.com?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+    var done = form.querySelector("[data-review-done],[data-contact-done]");
+    if (done) done.hidden = false;
+    if (review) form.reset();
+  });
 })();
 
 /* studio layer: the real pointer, work-row previews, magnetic buttons
@@ -94,6 +73,22 @@
    only the preview card eases behind it. */
 (function () {
   "use strict";
+  var bindMagnetic = function () {
+    var list = document.querySelectorAll(".btn");
+    for (var m = 0; m < list.length; m++) {
+      (function (b) {
+        if (b.dataset.mag) return;
+        b.dataset.mag = "1";
+        b.addEventListener("mousemove", function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.transform =
+            "translate(" + (((e.clientX - r.left - r.width / 2) / r.width) * 6).toFixed(1) + "px," +
+                           (((e.clientY - r.top - r.height / 2) / r.height) * 4).toFixed(1) + "px)";
+        });
+        b.addEventListener("mouseleave", function () { b.style.transform = ""; });
+      })(list[m]);
+    }
+  };
   var start = function () {
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     if (!fine) return;
@@ -101,8 +96,6 @@
     var prev = document.getElementById("preview");
     if (!cur) return;
     document.documentElement.classList.add("cur");
-    var arrow = cur.querySelector(".c-arrow");
-    var pill = cur.querySelector(".c-pill");
     var mx = -100, my = -100, px = -100, py = -100;
     document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
     var tick = function () {
@@ -136,18 +129,8 @@
       if (prev) prev.classList.remove("show");
     });
     document.documentElement.addEventListener("mouseenter", function () { cur.style.opacity = ""; });
-    var magnetic = document.querySelectorAll(".btn");
-    for (var m = 0; m < magnetic.length; m++) {
-      (function (b) {
-        b.addEventListener("mousemove", function (e) {
-          var r = b.getBoundingClientRect();
-          b.style.transform =
-            "translate(" + (((e.clientX - r.left - r.width / 2) / r.width) * 6).toFixed(1) + "px," +
-                           (((e.clientY - r.top - r.height / 2) / r.height) * 4).toFixed(1) + "px)";
-        });
-        b.addEventListener("mouseleave", function () { b.style.transform = ""; });
-      })(magnetic[m]);
-    }
+    bindMagnetic();
+    document.addEventListener("page:swap", bindMagnetic);
   };
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", start);
@@ -156,11 +139,12 @@
   }
 })();
 
-/* page transitions: the veil.
+/* page transitions: the veil and the soft router.
    the inline head CSS paints every document covered by the veil from the
-   very first frame, so navigation is slate in, slate out, no flash at any
-   point. this script only runs the clock: hold while fonts settle, lift
-   the veil, and slide it back up before the old page leaves. */
+   very first frame. internal links never unload the document: the veil
+   covers once, the next page is fetched underneath it, the document is
+   swapped in place, and the veil lifts. no frame belongs to the browser
+   between pages, so nothing can flash, and the mark animates once. */
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -199,19 +183,133 @@
   });
 
   if (reduced) return;
+
+  var COVER_MS = 480; /* matches the veil-cover animation */
+  var run = 0;
+
+  var fetchPage = function (url, my, ok, bad) {
+    if (window.fetch && window.AbortController && window.DOMParser) {
+      var ctl = new AbortController();
+      var settled = false;
+      var timer = window.setTimeout(function () {
+        if (settled) return;
+        settled = true;
+        bad();
+      }, 8000);
+      fetch(url.href, { signal: ctl.signal, credentials: "same-origin" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("http " + r.status);
+          return r.text();
+        })
+        .then(function (t) {
+          if (ctl.signal.aborted || settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          ok(t);
+        })
+        .catch(function () {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          if (!ctl.signal.aborted) bad();
+        });
+      return ctl;
+    }
+    bad();
+    return null;
+  };
+
+  var applyPage = function (text, url) {
+    var doc = new DOMParser().parseFromString(text, "text/html");
+    if (!doc || !doc.body) throw new Error("no body");
+
+    /* hold our chrome back, swap the document, put the chrome back */
+    var held = [];
+    var veil = document.body.querySelector(".veil");
+    if (veil) { held.push(veil); veil.parentNode.removeChild(veil); }
+    var cur = document.getElementById("cursor");
+    if (cur) { held.push(cur); cur.parentNode.removeChild(cur); }
+    var prev = document.getElementById("preview");
+    if (prev) { held.push(prev); prev.parentNode.removeChild(prev); }
+
+    document.body.className = doc.body.className || "";
+    document.body.innerHTML = "";
+    var kids = Array.prototype.slice.call(doc.body.childNodes);
+    for (var i = 0; i < kids.length; i++) {
+      document.body.appendChild(document.importNode(kids[i], true));
+    }
+    for (var j = 0; j < held.length; j++) document.body.appendChild(held[j]);
+
+    document.title = doc.title || document.title;
+    var d = doc.querySelector('meta[name="description"]');
+    var c = document.querySelector('meta[name="description"]');
+    if (d && c) c.setAttribute("content", d.getAttribute("content"));
+    var nj = doc.querySelector('script[type="application/ld+json"]');
+    var cj = document.querySelector('script[type="application/ld+json"]');
+    if (nj && cj) cj.textContent = nj.textContent;
+    else if (nj && !cj) document.head.appendChild(document.importNode(nj, true));
+    else if (cj && !nj) cj.parentNode.removeChild(cj);
+
+    document.dispatchEvent(new CustomEvent("page:swap"));
+  };
+
+  var swap = function (text, url, push, my) {
+    if (my !== run) return;
+    /* class flip and DOM swap in one task, so the entrance animations
+       key off the reveal state, never off leaving */
+    root.classList.remove("leaving");
+    root.classList.add("reveal");
+    try {
+      applyPage(text, url);
+    } catch (err) {
+      location.href = url.href; /* any surprise: a real navigation */
+      return;
+    }
+    if (push) {
+      try { history.pushState({ soft: 1 }, "", url.href); } catch (err2) {}
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+    window.setTimeout(function () {
+      if (my === run) root.classList.remove("reveal");
+    }, 950);
+  };
+
+  var go = function (url, push) {
+    var my = ++run;
+    var t0 = Date.now();
+    root.classList.remove("boot", "reveal");
+    root.classList.add("leaving");
+    fetchPage(url, my,
+      function (text) {
+        if (my !== run) return;
+        var wait = Math.max(0, COVER_MS - (Date.now() - t0));
+        window.setTimeout(function () { swap(text, url, push, my); }, wait);
+      },
+      function () {
+        if (my !== run) return;
+        location.href = url.href;
+      });
+  };
+
   document.addEventListener("click", function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
     if (!a) return;
     var href = a.getAttribute("href") || "";
     if (href.charAt(0) === "#" || /^(mailto|tel):/i.test(href)) return;
-    if (a.target === "_blank") return;
+    if (a.target === "_blank" || a.hasAttribute("download")) return;
     var url;
     try { url = new URL(href, location.href); } catch (err) { return; }
-    if (url.host !== location.host) return;
-    if (url.pathname === location.pathname && url.search === location.search) return;
+    if (url.host !== location.host || url.protocol !== location.protocol) return;
+    if (!/\.html?$/i.test(url.pathname) && url.pathname.charAt(url.pathname.length - 1) !== "/") return;
     e.preventDefault();
-    root.classList.add("leaving");
-    window.setTimeout(function () { location.href = url.href; }, 500);
+    go(url, true);
+  });
+
+  window.addEventListener("popstate", function () {
+    var url;
+    try { url = new URL(location.href); } catch (err) { return; }
+    if (!/\.html?$/i.test(url.pathname) && url.pathname.charAt(url.pathname.length - 1) !== "/") return;
+    go(url, false);
   });
 })();
