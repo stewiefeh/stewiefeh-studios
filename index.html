@@ -3,32 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>stewiefeh studio — custom websites for local businesses</title>
+<title>stewiefeh studios — custom websites for local businesses</title>
 <meta name="description" content="Custom websites built from scratch for local businesses. Free sample of your own site before you pay. Landing pages $750, full custom sites $1,650, hosting and care $50 a month.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="stewiefeh studio">
+<meta property="og:title" content="stewiefeh studios">
 <meta property="og:description" content="Custom websites built from scratch for local businesses. Free sample of your own site before you pay anything.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500&f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"stewiefeh studio","url":"https://stewiefeh.github.io/stewiefeh-studio/","email":"stephenfehon@gmail.com","areaServed":"South Jersey, New Jersey","description":"Custom websites built from scratch for local businesses, with a free sample of your own site before you pay anything.","makesOffer":[{"@type":"Offer","name":"Landing page","price":"750","priceCurrency":"USD","description":"One conversion-focused page, designed from scratch."},{"@type":"Offer","name":"Full custom site","price":"1650","priceCurrency":"USD","description":"Three pages or more, each designed and built from scratch."},{"@type":"Offer","name":"Hosting and care","price":"50","priceCurrency":"USD","unitText":"MONTH","description":"Hosting, backups, monitoring, and small content updates, month to month."}]}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"stewiefeh studios","url":"https://stewiefeh.github.io/stewiefeh-studios/","email":"stephenfehon@gmail.com","areaServed":"South Jersey, New Jersey","description":"Custom websites built from scratch for local businesses, with a free sample of your own site before you pay anything.","makesOffer":[{"@type":"Offer","name":"Landing page","price":"750","priceCurrency":"USD","description":"One conversion-focused page, designed from scratch."},{"@type":"Offer","name":"Full custom site","price":"1650","priceCurrency":"USD","description":"Three pages or more, each designed and built from scratch."},{"@type":"Offer","name":"Hosting and care","price":"50","priceCurrency":"USD","unitText":"MONTH","description":"Hosting, backups, monitoring, and small content updates, month to month."}]}
 </script>
 </head>
 <body>
 
-<div class="preloader" id="preloader" aria-hidden="true">
-  <p class="pre-word">stewiefeh&nbsp;studio</p>
-  <p class="pre-count" id="preCount">0</p>
+<div class="sheet-frame" aria-hidden="true">
+  <span class="frame-line frame-top"></span>
+  <span class="frame-line frame-bottom"></span>
+  <span class="frame-line frame-left"></span>
+  <span class="frame-line frame-right"></span>
+  <span class="reg reg-tl"></span><span class="reg reg-tr"></span>
+  <span class="reg reg-bl"></span><span class="reg reg-br"></span>
+  <span class="frame-scroll"><i id="scrollTick"></i></span>
 </div>
 
-<div class="progress" id="progress" aria-hidden="true"></div>
-<div class="cursor-dot" id="cDot" aria-hidden="true"></div>
-<div class="cursor-ring" id="cRing" aria-hidden="true"><span id="cLabel"></span></div>
-
 <header class="nav" id="nav">
-  <a class="wordmark" href="#top"><svg class="brand-mark" width="22" height="19" viewBox="0 0 64 56" aria-hidden="true"><polygon points="18,6 46,6 52,20 12,20" fill="#C4B5FD"/><polygon points="18,6 12,20 2,20" fill="#FF4D8F"/><polygon points="46,6 62,20 52,20" fill="#E85CA8"/><polygon points="2,20 12,20 32,52" fill="#8B5CF6"/><polygon points="12,20 52,20 32,52" fill="#57B7DC"/><polygon points="52,20 62,20 32,52" fill="#2FD8C8"/></svg><span>stewiefeh&nbsp;studio</span></a>
+  <a class="wordmark" href="#top">
+    <svg class="brand-mark" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="21" fill="none" stroke="#d99a2b" stroke-width="5"/>
+      <line x1="32" y1="2"  x2="32" y2="14" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="32" y1="50" x2="32" y2="62" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="2"  y1="32" x2="14" y2="32" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="50" y1="32" x2="62" y2="32" stroke="#e9e7e0" stroke-width="5"/>
+      <circle cx="32" cy="32" r="5.5" fill="#e9e7e0"/>
+    </svg>
+    <span>stewiefeh&nbsp;studios</span>
+  </a>
   <nav class="nav-links" aria-label="Main">
     <a href="#work">Work</a>
     <a href="#process">Process</a>
@@ -37,7 +51,7 @@
     <a href="#contact">Contact</a>
   </nav>
   <div class="nav-right">
-    <a class="btn btn-light" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry">Start a project</a>
+    <a class="btn btn-solid btn-sm" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry">Start a project</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
       <span></span><span></span>
     </button>
@@ -56,70 +70,82 @@
   <p class="menu-foot">stephenfehon@gmail.com</p>
 </div>
 
-<canvas class="bg-canvas" id="bg" aria-hidden="true"></canvas>
-  <div class="bg-scrim" aria-hidden="true"></div>
-
 <main id="top">
 
   <section class="hero">
-    <div class="hero-copy">
+    <canvas class="board" id="board" aria-hidden="true"></canvas>
+    <div class="hero-inner">
       <p class="avail" data-reveal><span class="dot" aria-hidden="true"></span> Open for new projects</p>
-      <h1 class="hero-title" id="heroTitle">Websites built <em>from scratch,</em> for real businesses.</h1>
+      <h1 class="hero-title">
+        <span class="line"><span>Websites built</span></span>
+        <span class="line"><span><em>from scratch,</em></span></span>
+        <span class="line"><span>for real businesses.</span></span>
+      </h1>
       <p class="hero-sub" data-reveal>I'm Stephen, a designer and developer in South Jersey. I design and code every site myself, and before you pay anything I send you a working sample of your own site with your branding on it. If you like it, we build it out. If you don't, you owe nothing.</p>
       <div class="hero-ctas" data-reveal>
-        <a class="btn btn-grad magnetic" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry">Start a project</a>
-        <a class="btn btn-line magnetic" href="#work">See the work</a>
+        <a class="btn btn-solid" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry">Start a project</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
+      <p class="trades" data-reveal>
+        <span class="trades-label">built for</span>
+        towing companies, pizzerias, salons, dentists, plumbers, auto shops, landscapers, contractors, restaurants, barbershops, gyms, veterinarians
+      </p>
     </div>
-    <div class="gem-wrap" aria-hidden="true">
-      <div class="gem-fallback"></div>
-      <canvas id="gem"></canvas>
-    </div>
-    <div class="scroll-hint" aria-hidden="true"><span></span>scroll</div>
+    <p class="coords" id="coords" aria-hidden="true">x 0000&nbsp;&nbsp;y 0000</p>
+    <div class="scroll-hint" aria-hidden="true"><span class="hint-line"></span>scroll</div>
   </section>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span>towing companies</span><i>✳</i><span>pizzerias</span><i>✳</i><span>salons</span><i>✳</i><span>dentists</span><i>✳</i><span>plumbers</span><i>✳</i><span>auto shops</span><i>✳</i><span>landscapers</span><i>✳</i><span>contractors</span><i>✳</i><span>restaurants</span><i>✳</i><span>barbershops</span><i>✳</i><span>gyms</span><i>✳</i><span>veterinarians</span><i>✳</i>
-    </div>
-    <div class="ticker-track">
-      <span>towing companies</span><i>✳</i><span>pizzerias</span><i>✳</i><span>salons</span><i>✳</i><span>dentists</span><i>✳</i><span>plumbers</span><i>✳</i><span>auto shops</span><i>✳</i><span>landscapers</span><i>✳</i><span>contractors</span><i>✳</i><span>restaurants</span><i>✳</i><span>barbershops</span><i>✳</i><span>gyms</span><i>✳</i><span>veterinarians</span><i>✳</i>
-    </div>
-  </div>
-
   <section class="work" id="work">
-    <h2 class="section-title split" data-reveal>Demo projects</h2>
-    <p class="section-lede" data-reveal>Every one designed from zero, and no two alike.<span class="swipe-hint" aria-hidden="true"> Swipe to see them all</span></p>
-    <div class="work-grid">
-      <a class="work-card tilt" href="https://stewiefeh.github.io/tangent/" target="_blank" rel="noopener" data-cursor="view">
-        <div class="work-visual visual-tangent"><span>Tangent</span><iframe class="work-preview" src="https://stewiefeh.github.io/tangent/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Tangent"></iframe></div>
-        <div class="work-meta">
-          <h3>Tangent</h3>
-          <p>A concept site for a New York design studio: a shader background that reacts to the cursor, a scroll-pinned work gallery, and page-wipe transitions, all hand-written with no libraries.</p>
-          <span class="work-tag">Interactive one-pager</span>
+    <div class="reel-head">
+      <h2 class="section-title" data-reveal><span class="line"><span>Demo projects</span></span></h2>
+      <p class="section-lede" data-reveal>Every one designed from zero, and no two alike.<span class="swipe-hint" aria-hidden="true"> Scroll to see them all</span></p>
+    </div>
+    <div class="reel-wrap" id="reelWrap">
+      <div class="reel-sticky">
+        <div class="reel-track" id="reelTrack">
+          <a class="work-card" href="https://stewiefeh.github.io/tangent/" target="_blank" rel="noopener">
+            <div class="work-visual visual-tangent">
+              <span class="corner c-tl" aria-hidden="true"></span><span class="corner c-tr" aria-hidden="true"></span>
+              <span class="corner c-bl" aria-hidden="true"></span><span class="corner c-br" aria-hidden="true"></span>
+              <iframe class="work-preview" src="https://stewiefeh.github.io/tangent/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Tangent"></iframe>
+            </div>
+            <div class="work-meta">
+              <h3>Tangent</h3>
+              <p>A concept site for a New York design studio: a shader background that reacts to the cursor, a scroll-pinned work gallery, and page-wipe transitions, all hand-written with no libraries.</p>
+              <span class="work-tag">Interactive one-pager</span>
+            </div>
+          </a>
+          <a class="work-card" href="https://stewiefeh.github.io/ardane/" target="_blank" rel="noopener">
+            <div class="work-visual visual-ardane">
+              <span class="corner c-tl" aria-hidden="true"></span><span class="corner c-tr" aria-hidden="true"></span>
+              <span class="corner c-bl" aria-hidden="true"></span><span class="corner c-br" aria-hidden="true"></span>
+              <iframe class="work-preview" src="https://stewiefeh.github.io/ardane/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Ardane"></iframe>
+            </div>
+            <div class="work-meta">
+              <h3>Ardane</h3>
+              <p>A bronze-and-oak atelier concept in ink, bone, and brass: virtual smooth scroll, split-character typography, and clip-path reveals. Proof that quiet and animated are not opposites.</p>
+              <span class="work-tag">Interactive one-pager</span>
+            </div>
+          </a>
+          <a class="work-card" href="https://stewiefeh.github.io/kroma/" target="_blank" rel="noopener">
+            <div class="work-visual visual-kroma">
+              <span class="corner c-tl" aria-hidden="true"></span><span class="corner c-tr" aria-hidden="true"></span>
+              <span class="corner c-bl" aria-hidden="true"></span><span class="corner c-br" aria-hidden="true"></span>
+              <iframe class="work-preview" src="https://stewiefeh.github.io/kroma/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Kroma"></iframe>
+            </div>
+            <div class="work-meta">
+              <h3>Kroma</h3>
+              <p>A full-color digital studio concept that refuses to whisper. Built to show how much personality a single page can carry when color leads the design.</p>
+              <span class="work-tag">Studio concept</span>
+            </div>
+          </a>
         </div>
-      </a>
-      <a class="work-card tilt" href="https://stewiefeh.github.io/ardane/" target="_blank" rel="noopener" data-cursor="view">
-        <div class="work-visual visual-ardane"><span>Ardane</span><iframe class="work-preview" src="https://stewiefeh.github.io/ardane/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Ardane"></iframe></div>
-        <div class="work-meta">
-          <h3>Ardane</h3>
-          <p>A bronze-and-oak atelier concept in ink, bone, and brass: virtual smooth scroll, split-character typography, and clip-path reveals. Proof that quiet and animated are not opposites.</p>
-          <span class="work-tag">Interactive one-pager</span>
-        </div>
-      </a>
-      <a class="work-card tilt" href="https://stewiefeh.github.io/kroma/" target="_blank" rel="noopener" data-cursor="view">
-        <div class="work-visual visual-kroma"><span>Kroma</span><iframe class="work-preview" src="https://stewiefeh.github.io/kroma/" loading="lazy" tabindex="-1" aria-hidden="true" title="Live preview of Kroma"></iframe></div>
-        <div class="work-meta">
-          <h3>Kroma</h3>
-          <p>A full-color digital studio concept that refuses to whisper. Built to show how much personality a single page can carry when color leads the design.</p>
-          <span class="work-tag">Studio concept</span>
-        </div>
-      </a>
+      </div>
     </div>
   </section>
 
   <section class="process" id="process">
-    <h2 class="section-title split" data-reveal>How a project runs</h2>
+    <h2 class="section-title" data-reveal><span class="line"><span>How a project runs</span></span></h2>
     <ol class="steps">
       <li data-reveal>
         <h3><span class="step-n">1</span>You show me the business</h3>
@@ -141,13 +167,13 @@
   </section>
 
   <section class="pricing" id="pricing">
-    <h2 class="section-title split" data-reveal>Straightforward pricing</h2>
+    <h2 class="section-title" data-reveal><span class="line"><span>Straightforward pricing</span></span></h2>
     <p class="section-lede" data-reveal>Flat project fees. Half to start, half at launch. Every plan begins with the free sample, so if the sample misses, you owe nothing.</p>
-    <p class="swipe-hint" aria-hidden="true">Swipe to compare plans</p>
     <div class="plans">
-      <article class="plan" data-reveal data-tilt-soft>
+      <article class="plan" data-reveal>
         <h3>Landing page</h3>
-        <p class="price">$750<span class="price-note">one-time</span></p>
+        <p class="price"><span class="price-figure">$750</span><span class="price-note">one-time</span></p>
+        <span class="dim-line" aria-hidden="true"></span>
         <p class="plan-for">For a single page with one job: turn a search into a phone call, booking, or order.</p>
         <p class="plan-label">What I deliver</p>
         <ul class="plan-list">
@@ -165,12 +191,13 @@
           <li>The facts: services, hours, phone, and what you want visitors to do</li>
           <li>Quick answers when I have questions during the build</li>
         </ul>
-        <a class="btn btn-line" href="mailto:stephenfehon@gmail.com?subject=Landing%20page%20inquiry">Ask about a landing page</a>
+        <a class="btn btn-ghost" href="mailto:stephenfehon@gmail.com?subject=Landing%20page%20inquiry">Ask about a landing page</a>
       </article>
-      <article class="plan plan-featured" data-reveal data-tilt-soft>
+      <article class="plan plan-featured" data-reveal>
         <p class="plan-badge">The full build</p>
         <h3>Full custom site</h3>
-        <p class="price">$1,650<span class="price-note">one-time</span></p>
+        <p class="price"><span class="price-figure">$1,650</span><span class="price-note">one-time</span></p>
+        <span class="dim-line" aria-hidden="true"></span>
         <p class="plan-for">For a business that wants its whole presence rebuilt: three pages or more, every one done properly.</p>
         <p class="plan-label">What I deliver</p>
         <ul class="plan-list">
@@ -189,13 +216,14 @@
           <li>The facts: services, hours, phone, pages you want, and what you want visitors to do</li>
           <li>Quick answers when I have questions during the build</li>
         </ul>
-        <a class="btn btn-grad" href="mailto:stephenfehon@gmail.com?subject=Full%20site%20inquiry">Start a full site</a>
+        <a class="btn btn-solid" href="mailto:stephenfehon@gmail.com?subject=Full%20site%20inquiry">Start a full site</a>
       </article>
-      <article class="plan" data-reveal data-tilt-soft>
+      <article class="plan" data-reveal>
         <p class="plan-badge plan-badge-ghost">Custom quote</p>
         <h3>Custom project</h3>
-        <p class="price price-sm">Let&rsquo;s talk<span class="price-note">quoted per project</span></p>
-        <p class="plan-for">For ideas that don&rsquo;t fit a standard site: stores, booking systems, portals, anything with a twist.</p>
+        <p class="price price-sm"><span class="price-figure">Let's talk</span><span class="price-note">quoted per project</span></p>
+        <span class="dim-line" aria-hidden="true"></span>
+        <p class="plan-for">For ideas that don't fit a standard site: stores, booking systems, portals, anything with a twist.</p>
         <p class="plan-label">What I deliver</p>
         <ul class="plan-list">
           <li>Everything in the full build as the starting point</li>
@@ -210,14 +238,14 @@
           <li>Any must-haves: payments, bookings, accounts, the lot</li>
           <li>A rough budget range if you have one in mind</li>
         </ul>
-        <a class="btn btn-grad" href="mailto:stephenfehon@gmail.com?subject=Custom%20project%20inquiry">Describe your project</a>
+        <a class="btn btn-ghost" href="mailto:stephenfehon@gmail.com?subject=Custom%20project%20inquiry">Describe your project</a>
       </article>
     </div>
 
     <div class="host-band" data-reveal>
       <div class="host-stub">
         <h3>Hosting &amp; care</h3>
-        <p class="price">$50<span class="price-note">a month</span></p>
+        <p class="price"><span class="price-figure">$50</span><span class="price-note">a month</span></p>
         <p class="host-terms">Month to month. Cancel anytime.</p>
       </div>
       <div class="host-main">
@@ -233,26 +261,26 @@
 
     <div class="faq" data-reveal>
       <details class="faq-item">
-        <summary>How long until my site is live?<span class="fq-x" aria-hidden="true">+</span></summary>
+        <summary>How long until my site is live?<span class="fq-x" aria-hidden="true"></span></summary>
         <p>A landing page is about a week from the go-ahead. A full site usually takes two to three, and the main variable is how fast I get your photos and the facts about your business.</p>
       </details>
       <details class="faq-item">
-        <summary>What happens if the sample isn't right?<span class="fq-x" aria-hidden="true">+</span></summary>
+        <summary>What happens if the sample isn't right?<span class="fq-x" aria-hidden="true"></span></summary>
         <p>Tell me what missed and I'll take another pass. If it still isn't right, you walk away owing nothing. That's the whole point of building the sample first.</p>
       </details>
       <details class="faq-item">
-        <summary>Do you write the words, or do I?<span class="fq-x" aria-hidden="true">+</span></summary>
+        <summary>Do you write the words, or do I?<span class="fq-x" aria-hidden="true"></span></summary>
         <p>Both. On a landing page you send what you have and I lay it out so it reads well. On a full site I write the copy or clean up yours, whichever you prefer.</p>
       </details>
       <details class="faq-item">
-        <summary>I already have a website. Does that change anything?<span class="fq-x" aria-hidden="true">+</span></summary>
+        <summary>I already have a website. Does that change anything?<span class="fq-x" aria-hidden="true"></span></summary>
         <p>Not the price. If a rebuild makes sense I move whatever is worth keeping over and start fresh where it isn't. If your current site is doing its job, I'll tell you that too.</p>
       </details>
     </div>
   </section>
 
-    <section class="reviews" id="reviews">
-    <h2 class="section-title split" data-reveal>Reviews</h2>
+  <section class="reviews" id="reviews">
+    <h2 class="section-title" data-reveal><span class="line"><span>Reviews</span></span></h2>
     <p class="section-lede" data-reveal>Real words from real builds. Shipped a site with me? Leave your own below. Every review here came from the person behind the site.</p>
     <form class="review-card" id="reviewForm" data-reveal>
       <p class="plan-label">Your rating</p>
@@ -278,14 +306,14 @@
         <label for="rvText">Your opinion</label>
         <textarea id="rvText" name="opinion" rows="4" required maxlength="600" placeholder="What the site does for your business, how the build went, anything someone should know."></textarea>
       </div>
-      <button type="submit" class="btn btn-grad">Send my review</button>
+      <button type="submit" class="btn btn-solid">Send my review</button>
       <p class="review-note">This opens your email app with the review filled in and addressed to me. It goes live after a quick read, so everything on this page stays real.</p>
       <p class="review-done" hidden>Thanks! Your email app should be open with the review ready to send.</p>
     </form>
   </section>
 
   <section class="about" id="about">
-    <h2 class="section-title split" data-reveal>One person, start to finish</h2>
+    <h2 class="section-title" data-reveal><span class="line"><span>One person, start to finish</span></span></h2>
     <div class="about-body" data-reveal>
       <p>I'm Stephen Fehon. I design, write, and code every site myself, which means the person you talk to is the person building your site. Nothing gets lost between a sales call and a production team, because there is no production team.</p>
       <p>I build with modern tools and hand-written code, I test on real phones, and I keep sites fast enough that customers on a bad connection still get them. Every project gets the same care whether it's a single page or a full site.</p>
@@ -293,18 +321,25 @@
   </section>
 
   <section class="contact" id="contact">
-    <h2 class="contact-title split" data-reveal>Tell me about <em>your business.</em></h2>
-    <a class="contact-mail magnetic" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry" data-reveal>stephenfehon@gmail.com</a>
+    <h2 class="contact-title" data-reveal><span class="line"><span>Tell me about</span></span><span class="line"><span><em>your business.</em></span></span></h2>
+    <a class="contact-mail" href="mailto:stephenfehon@gmail.com?subject=Project%20inquiry" data-reveal>stephenfehon@gmail.com</a>
     <p class="contact-note" data-reveal>I usually reply within a day. Include the business name and what you'd want the site to do, and I'll come back with a plan and a price.</p>
   </section>
 
 </main>
 
 <footer class="footer">
-  <p class="foot-brand"><svg class="brand-mark brand-mark-sm" width="15" height="13" viewBox="0 0 64 56" aria-hidden="true"><polygon points="18,6 46,6 52,20 12,20" fill="#C4B5FD"/><polygon points="18,6 12,20 2,20" fill="#FF4D8F"/><polygon points="46,6 62,20 52,20" fill="#E85CA8"/><polygon points="2,20 12,20 32,52" fill="#8B5CF6"/><polygon points="12,20 52,20 32,52" fill="#57B7DC"/><polygon points="52,20 62,20 32,52" fill="#2FD8C8"/></svg>© 2026 stewiefeh studio</p>
+  <p class="foot-brand">
+    <svg class="brand-mark brand-mark-sm" width="14" height="14" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="21" fill="none" stroke="#d99a2b" stroke-width="5"/>
+      <line x1="32" y1="2"  x2="32" y2="14" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="32" y1="50" x2="32" y2="62" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="2"  y1="32" x2="14" y2="32" stroke="#e9e7e0" stroke-width="5"/>
+      <line x1="50" y1="32" x2="62" y2="32" stroke="#e9e7e0" stroke-width="5"/>
+      <circle cx="32" cy="32" r="5.5" fill="#e9e7e0"/>
+    </svg>&copy; 2026 stewiefeh studios</p>
   <p class="foot-links">
     <a href="mailto:stephenfehon@gmail.com">stephenfehon@gmail.com</a>
-    <span aria-hidden="true">&middot;</span>
     <a href="https://github.com/stewiefeh" target="_blank" rel="noopener">GitHub</a>
   </p>
   <p class="foot-loc">South Jersey, NJ</p>
