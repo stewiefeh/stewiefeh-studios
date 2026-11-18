@@ -621,3 +621,77 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
     .tile.flip,.witem:nth-of-type(2){animation-range:entry 0% entry 32%}
   }
 }
+
+/* =========================================================
+   editorial rebuild (phase 2): case pages
+   ========================================================= */
+
+/* ---------- case head ---------- */
+.case-head .case-kicker{
+  font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:18px;
+}
+.case-display{font-size:clamp(2.9rem,6vw,5.8rem)}
+
+/* ---------- meta strip ---------- */
+.meta-strip{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:clamp(18px,3vw,40px);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:22px 0;margin:clamp(28px,4vw,48px) 0 clamp(28px,4vw,48px);
+}
+.meta-strip dt{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.meta-strip dd{font-size:.92rem;font-weight:600;color:var(--ink);line-height:1.45}
+.meta-strip .meta-live dd a{
+  color:var(--amber-deep);text-decoration:none;font-weight:700;white-space:nowrap;
+  border-bottom:1px solid transparent;transition:border-color .2s,color .2s;
+}
+.meta-strip .meta-live dd a:hover{border-color:var(--amber);color:var(--amber)}
+@media (max-width:900px){.meta-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.meta-strip .meta-live{grid-column:1/-1}}
+
+/* ---------- full-bleed case figure ---------- */
+.case-figure{
+  aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:var(--ink);
+  box-shadow:0 30px 80px rgba(20,19,15,.16);margin-bottom:clamp(40px,6vw,72px);
+}
+.case-figure img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- case body: prose + facts panel ---------- */
+.case-body{
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);
+  gap:clamp(32px,5vw,72px);align-items:start;
+  padding-bottom:clamp(44px,7vw,88px);
+}
+.case-prose h2{font-size:clamp(1.5rem,2.6vw,2.1rem);margin-bottom:16px}
+.case-prose h2 + p{margin-bottom:34px}
+.case-prose p:last-child{margin-bottom:0}
+.case-facts{
+  border-top:2px solid var(--ink);padding-top:20px;
+  position:sticky;top:96px;
+}
+.case-facts h3{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.case-facts dl{display:flex;flex-direction:column;gap:14px}
+.case-facts dt{font-size:.8rem;font-weight:700;color:var(--ink)}
+.case-facts dd{font-size:.92rem;color:var(--muted);line-height:1.5}
+@media (max-width:900px){.case-body{grid-template-columns:1fr}.case-facts{position:static}}
+
+/* ---------- next case ---------- */
+.case-next{
+  display:block;border-top:1px solid var(--line);padding:clamp(32px,5vw,56px) 0;
+  text-decoration:none;color:inherit;
+}
+.case-next .cn-label{
+  display:block;font-size:clamp(1.7rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.03em;
+  transition:color .2s;
+}
+.case-next .cn-sub{
+  display:block;font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--muted);
+  margin-top:6px;
+}
+.case-next:hover .cn-label{color:var(--amber-deep)}
+
+/* ---------- case reveals reuse the scroll system ---------- */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .case-figure,.case-body{animation:up .8s var(--ease) both;animation-timeline:view();animation-range:entry 0% entry 30%}
+  }
+}
