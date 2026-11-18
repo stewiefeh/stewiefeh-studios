@@ -899,3 +899,9 @@ main>*:nth-child(n+6){animation-delay:.42s}
   main>*,html.leaving main{animation:none}
   .veil-in{animation:none}
 }
+
+/* contact: two-column stack on small screens */
+.two-col{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(40px,6vw,80px)}
+@media (max-width:760px){
+  .two-col{grid-template-columns:1fr;gap:32px}
+}
