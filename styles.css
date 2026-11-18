@@ -369,6 +369,8 @@ p strong{color:var(--ink);font-weight:600}
 
 
 /* ---------- studio layer: scroll-ink headlines, cursor, work previews, magnetic ---------- */
+#cursor{display:none;position:fixed;left:0;top:0;z-index:80;pointer-events:none;will-change:transform}
+#preview{display:none;position:fixed;left:0;top:0;z-index:79;pointer-events:none;will-change:transform}
 @property --ink-p{syntax:"<percentage>";initial-value:0%;inherits:false}
 .ink{
   background-image:linear-gradient(90deg,var(--amber) var(--ink-p),var(--ink-fill,var(--ink)) var(--ink-p));
@@ -385,8 +387,7 @@ p strong{color:var(--ink);font-weight:600}
   #preview{display:block}
 }
 html.fx-test body{cursor:none}
-html.fx-test #cursor,html.fx-test #preview{display:block}
-#cursor{display:none;position:fixed;left:0;top:0;z-index:80;pointer-events:none;will-change:transform}
+html.fx-test #cursor,html.fx-test #preview{display:block !important}
 #cursor .c-dot{
   transform:translate(-50%,-50%);
   width:12px;height:12px;border-radius:999px;background:var(--amber);
@@ -397,7 +398,6 @@ html.fx-test #cursor,html.fx-test #preview{display:block}
 #cursor.link .c-dot{width:30px;height:30px;opacity:.9}
 #cursor.row .c-dot{width:76px;height:44px}
 #cursor.row .c-dot span{opacity:1}
-#preview{display:none;position:fixed;left:0;top:0;z-index:79;pointer-events:none;will-change:transform}
 #preview .p-card{
   transform:translate(-50%,-56%) scale(.9) rotate(-2.5deg);
   width:min(300px,26vw);aspect-ratio:3/2;border-radius:14px;overflow:hidden;
