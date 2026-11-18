@@ -288,14 +288,14 @@
 
   window.addEventListener("pageshow", function (e) {
     if (e.persisted) {
-      root.classList.remove("boot", "reveal", "leaving");
+      root.classList.remove("boot", "reveal", "leaving", "nav");
       root.classList.add("bf");
     }
   });
 
   if (reduced) return;
 
-  var COVER_MS = 1250; /* the draw runs to its last stroke before the lift */
+  var COVER_MS = 460; /* a navigation cover is a bare slate wipe: hold only until the wipe lands */
   var run = 0;
 
   var fetchPage = function (url, my, ok, bad) {
@@ -378,6 +378,7 @@
     if (my !== run) return;
     /* class flip and DOM swap in one task, so the entrance animations
        key off the reveal state, never off leaving */
+    root.classList.add("nav");
     root.classList.remove("leaving");
     root.classList.add("reveal");
     try {
@@ -391,7 +392,7 @@
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
     window.setTimeout(function () {
-      if (my === run) root.classList.remove("reveal");
+      if (my === run) root.classList.remove("reveal", "nav");
     }, 950);
   };
 
