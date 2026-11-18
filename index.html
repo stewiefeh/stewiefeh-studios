@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261118d">
+<link rel="stylesheet" href="styles.css?v=20261118e">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"stewiefeh studios","url":"https://stewiefehstudios.com/","email":"stephenfehon@gmail.com","areaServed":"South Jersey, New Jersey","logo":"https://stewiefehstudios.com/logo.svg","description":"Custom websites built from scratch for local businesses, with a free sample of your own site before you pay anything.","makesOffer":[{"@type":"Offer","name":"Landing page","price":"750","priceCurrency":"USD","description":"One conversion-focused page, designed from scratch."},{"@type":"Offer","name":"Full custom site","price":"1650","priceCurrency":"USD","description":"Three pages or more, each designed and built from scratch."},{"@type":"Offer","name":"Hosting and care","price":"50","priceCurrency":"USD","unitText":"MONTH","description":"Hosting, backups, monitoring, and small content updates, month to month."}]}
 </script>
@@ -72,18 +72,18 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>Selected work</h2>
+        <h2 class="ink">Selected work</h2>
         <a class="more" href="work.html">All of the work</a>
       </div>
-      <a class="workrow" href="https://stewiefeh.github.io/tangent/">
+      <a class="workrow" data-preview="0" href="https://stewiefeh.github.io/tangent/">
         <div class="wname"><b>Tangent</b><em>interactive one-pager</em></div>
         <p>A concept site for a New York design studio: a shader background that reacts to the cursor, a scroll-pinned work gallery, and page-wipe transitions, all hand-written with no libraries.</p>
       </a>
-      <a class="workrow" href="https://stewiefeh.github.io/ardane/">
+      <a class="workrow" data-preview="1" href="https://stewiefeh.github.io/ardane/">
         <div class="wname"><b>Ardane</b><em>interactive one-pager</em></div>
         <p>A bronze-and-oak atelier concept in ink, bone, and brass: virtual smooth scroll, split-character typography, and clip-path reveals. Proof that quiet and animated are not opposites.</p>
       </a>
-      <a class="workrow" href="https://stewiefeh.github.io/kroma/">
+      <a class="workrow" data-preview="2" href="https://stewiefeh.github.io/kroma/">
         <div class="wname"><b>Kroma</b><em>studio concept</em></div>
         <p>A full-color digital studio concept that refuses to whisper. Built to show how much personality a single page can carry when color leads the design.</p>
       </a>
@@ -93,7 +93,7 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>How a project runs</h2>
+        <h2 class="ink">How a project runs</h2>
         <a class="more" href="services.html">Pricing and details</a>
       </div>
       <div class="steps">
@@ -107,7 +107,7 @@
 
   <section class="band">
     <div class="wrap">
-      <h2>Tell me about your <em class="accent">business.</em></h2>
+      <h2 class="ink">Tell me about your <em class="accent">business.</em></h2>
       <p class="lede">Include the business name and what you'd want the site to do, and I'll come back with a plan and a price.</p>
       <a class="mail" href="mailto:stephenfehon@gmail.com">stephenfehon@gmail.com</a>
     </div>
@@ -117,7 +117,7 @@
 
 <footer class="site-foot">
   <div class="wrap">
-    <div class="foot-mark" aria-hidden="true">stewiefeh studios</div>
+    <div class="foot-mark" aria-hidden="true">stewiefeh studios<span class="fm-dot">.</span><span class="fm-year">©26</span></div>
     <div class="foot-grid">
       <div class="foot-brand">
         <svg viewBox="-3 -10 116 116" aria-hidden="true"><path d="M 91 17 C 85 5, 69 -1, 53 3 C 37 7, 29 19, 35 29 C 41 39, 59 39, 69 47 C 79 55, 81 71, 71 79 C 61 87, 43 87, 33 77" fill="none" stroke="#c4830e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M 84 24 C 78 12, 62 6, 46 10 C 30 14, 22 26, 28 36 C 34 46, 52 46, 62 54 C 72 62, 74 78, 64 86 C 54 94, 36 94, 26 84" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -143,6 +143,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20261118d"></script>
-</body>
+<script src="script.js?v=20261118e"></script>
+<div id="cursor" aria-hidden="true"><div class="c-dot"><span>view</span></div></div>\n<div id="preview" aria-hidden="true"><div class="p-card"><img src="preview-tangent.jpg" alt=""><img src="preview-ardane.jpg" alt=""><img src="preview-kroma.jpg" alt=""></div></div>\n</body>
 </html>
