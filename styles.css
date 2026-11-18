@@ -717,6 +717,7 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
    fit the longest word ("Straightforward") inside a 390px column */
 @media (max-width:480px){
   h1{font-size:clamp(2.1rem,9vw,2.9rem)}
+  .hero-display{font-size:clamp(2.1rem,9vw,2.9rem)}
   .case-display{font-size:clamp(2.1rem,9vw,2.9rem)}
 }
 /* live-at urls are unbreakable strings and blew the phone viewport wide */
