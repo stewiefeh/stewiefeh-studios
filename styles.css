@@ -381,20 +381,31 @@ p strong{color:var(--ink);font-weight:600}
   .ink{background-image:none;color:inherit}
 }
 @media (hover:hover) and (pointer:fine){
-  body{cursor:none}
-  input,textarea,select{cursor:text}
-  #cursor{display:block}
+  html.cur body{cursor:none}
+  html.cur a,html.cur button{cursor:none}
+  html.cur input,html.cur textarea,html.cur select{cursor:text}
+  html.cur #cursor{display:block}
   #preview{display:block}
 }
 html.fx-test body{cursor:none}
 html.fx-test #cursor,html.fx-test #preview{display:block !important}
-/* ring + trailing amber dot; the ring lags, the dot leads */
-#cursor .c-ring{
-  position:absolute;left:0;top:0;width:30px;height:30px;border-radius:999px;
-  border:1.5px solid rgba(20,19,15,.4);
-  transition:width .35s var(--ease),height .35s var(--ease),border-color .25s,background-color .25s;
+/* real pointer: a drawn arrow in the site's ink that follows the mouse
+   one-to-one, warms to amber over anything clickable, and hands the
+   work-row "view" call to the pill */
+#cursor .c-arrow{
+  position:absolute;left:-5px;top:-3px;width:27px;height:27px;display:block;
+  filter:drop-shadow(0 1px 2px rgba(20,19,15,.38));
+  transition:transform .18s var(--ease),opacity .2s;
 }
-#cursor .c-dot{position:absolute;left:0;top:0;width:5px;height:5px;border-radius:999px;background:var(--amber)}
+#cursor .c-arrow svg{display:block;width:100%;height:100%}
+#cursor .c-arrow path{
+  fill:var(--ink);stroke:var(--paper);stroke-width:1.4;paint-order:stroke;
+  transition:fill .18s;
+}
+#cursor.down .c-arrow{transform:scale(.86)}
+#cursor.link .c-arrow{transform:scale(1.16)}
+#cursor.link .c-arrow path{fill:var(--amber)}
+#cursor.row .c-arrow{opacity:0}
 #cursor .c-pill{
   position:absolute;left:0;top:0;width:0;height:0;border-radius:999px;
   background:var(--ink);color:var(--paper);
@@ -403,9 +414,6 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
   transition:width .35s var(--ease),height .35s var(--ease),opacity .2s;
 }
 #cursor .c-pill::after{content:"view"}
-#cursor.link .c-ring{width:46px;height:46px;border-color:var(--amber)}
-#cursor.link .c-dot{width:3px;height:3px}
-#cursor.row .c-ring{width:70px;height:70px;border-color:transparent}
 #cursor.row .c-pill{width:68px;height:38px;opacity:1}
 #preview .p-card{
   transform:translate(-50%,-56%) scale(.9) rotate(-2.5deg);
@@ -735,45 +743,76 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
 html,body{overflow-x:clip}
 
 /* =========================================================
-   page transitions: the wipe
-   a slate panel with an amber hairline sweeps the old page
-   away and hands the new one its entrance
+   page transitions: the veil
+   every document paints covered by a slate veil that already
+   carries the studio mark (inline head CSS paints it before
+   stylesheets arrive, so there is no flash to hide). the mark
+   draws itself, the wordmark rises, then the veil lifts and the
+   page takes its staggered entrance. leaving slides the veil
+   back up before the old page goes.
    ========================================================= */
-html{background:var(--paper)}
-.wipe{
-  position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden;
-  background:var(--slate);
-  animation:wipe-reveal .6s var(--ease) .12s forwards;
+.veil{
+  position:fixed;inset:0;z-index:400;overflow:hidden;pointer-events:none;
+  background:var(--slate);display:none;
 }
-.wipe::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--amber)}
-.wipe .wipe-mark{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  font-family:var(--serif);font-style:italic;font-size:2rem;color:var(--amber);
-  opacity:0;transition:opacity .2s ease .1s;
+html.boot .veil,html.leaving .veil{display:block}
+html.boot,html.leaving{overflow:hidden}
+.veil-in{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
 }
-html.leaving .wipe{animation:wipe-cover .32s var(--ease) forwards}
-html.leaving .wipe .wipe-mark{opacity:.9}
-body.rail-page .wipe{left:var(--railw)}
-@media (max-width:980px){body.rail-page .wipe{left:0}}
-html.bf .wipe{animation:none;transform:translateY(-101%)}
-@keyframes wipe-reveal{to{transform:translateY(-101%)}}
-@keyframes wipe-cover{from{transform:translateY(101%)}to{transform:translateY(0)}}
+.veil-logo{width:76px;height:76px}
+.veil-logo path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.veil-logo .lp-a{stroke:var(--amber);stroke-width:7}
+.veil-logo .lp-b{stroke:var(--paper);stroke-width:13}
+.veil-word{
+  font-family:var(--sans);font-weight:600;font-size:1.02rem;color:var(--paper);
+  letter-spacing:.01em;opacity:0;transform:translateY(10px);
+}
+.veil-word b{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--amber)}
+.veil-line{width:54px;height:2px;background:var(--amber);transform:scaleX(0);transform-origin:left;opacity:.85}
+
+/* boot: the mark draws on, the wordmark rises, the hairline sweeps */
+html.boot .veil-logo .lp-a{animation:lp-draw .6s cubic-bezier(.6,0,.2,1) .1s both}
+html.boot .veil-logo .lp-b{animation:lp-draw .65s cubic-bezier(.6,0,.2,1) .24s both}
+html.boot .veil-word{animation:veil-rise .5s var(--ease) .55s forwards}
+html.boot .veil-line{animation:veil-sweep .55s var(--ease) .6s forwards}
+@keyframes lp-draw{from{stroke-dashoffset:198}to{stroke-dashoffset:0}}
+@keyframes veil-rise{to{opacity:1;transform:none}}
+@keyframes veil-sweep{to{transform:scaleX(1)}}
+
+/* reveal: the veil lifts away and hands the page its entrance */
+html.reveal .veil{animation:veil-out .7s cubic-bezier(.76,0,.24,1) .05s forwards}
+html.reveal .veil-in{animation:veil-fade .32s var(--ease) forwards}
+html.reveal .veil::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--amber)}
+@keyframes veil-out{to{transform:translateY(-101%)}}
+@keyframes veil-fade{to{opacity:0;transform:translateY(-14px)}}
+html.bf .veil{display:none!important}
+
+/* leaving: the veil slides up from the bottom with the mark already whole */
+html.leaving .veil{transform:translateY(101%);animation:veil-cover .48s cubic-bezier(.76,0,.24,1) forwards}
+html.leaving .veil-in{animation:veil-pop .45s var(--ease) both}
+@keyframes veil-cover{from{transform:translateY(101%)}to{transform:translateY(0)}}
+@keyframes veil-pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 @keyframes drift-out{to{opacity:0;transform:translateY(-12px)}}
 html.leaving main{animation:drift-out .3s var(--ease) forwards}
 
-/* staggered entrance: each top-level block rises in as the veil clears */
+/* staggered entrance: each top-level block rises in as the veil clears.
+   under boot the clock is held so the entrance starts on reveal, not on load. */
 @keyframes rise-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 main>*{animation:rise-in .55s var(--ease) backwards}
-main>*:nth-child(1){animation-delay:.22s}
-main>*:nth-child(2){animation-delay:.28s}
-main>*:nth-child(3){animation-delay:.34s}
-main>*:nth-child(4){animation-delay:.4s}
-main>*:nth-child(5){animation-delay:.46s}
-main>*:nth-child(n+6){animation-delay:.52s}
+html.boot main>*{animation-play-state:paused}
+main>*:nth-child(1){animation-delay:.12s}
+main>*:nth-child(2){animation-delay:.18s}
+main>*:nth-child(3){animation-delay:.24s}
+main>*:nth-child(4){animation-delay:.3s}
+main>*:nth-child(5){animation-delay:.36s}
+main>*:nth-child(n+6){animation-delay:.42s}
 
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 
 @media (prefers-reduced-motion: reduce){
-  .wipe{display:none}
+  .veil{display:none!important}
   main>*,html.leaving main{animation:none}
+  .veil-in{animation:none}
 }

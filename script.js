@@ -89,28 +89,25 @@
   }
 })();
 
-/* studio layer: cursor, work-row previews, magnetic buttons (fine pointers, motion welcome) */
+/* studio layer: the real pointer, work-row previews, magnetic buttons
+   (fine pointers, motion welcome). the arrow tracks the mouse exactly;
+   only the preview card eases behind it. */
 (function () {
   "use strict";
   var start = function () {
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    var motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || !motion) return;
+    if (!fine) return;
     var cur = document.getElementById("cursor");
     var prev = document.getElementById("preview");
     if (!cur) return;
-    var ring = cur.querySelector(".c-ring");
-    var dot = cur.querySelector(".c-dot");
+    document.documentElement.classList.add("cur");
+    var arrow = cur.querySelector(".c-arrow");
     var pill = cur.querySelector(".c-pill");
-    var mx = -100, my = -100, rx = -100, ry = -100, dx = -100, dy = -100, px = -100, py = -100;
+    var mx = -100, my = -100, px = -100, py = -100;
     document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
     var tick = function () {
-      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-      dx += (mx - dx) * 0.45; dy += (my - dy) * 0.45;
+      cur.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
       px += (mx - px) * 0.14; py += (my - py) * 0.14;
-      ring.style.transform = "translate3d(" + rx + "px," + ry + "px,0) translate(-50%,-50%)";
-      dot.style.transform = "translate3d(" + dx + "px," + dy + "px,0) translate(-50%,-50%)";
-      if (pill) pill.style.transform = "translate3d(" + rx + "px," + ry + "px,0) translate(-50%,-50%)";
       if (prev) prev.style.transform = "translate3d(" + px + "px," + py + "px,0)";
       requestAnimationFrame(tick);
     };
@@ -132,6 +129,8 @@
         }
       }
     });
+    document.addEventListener("mousedown", function () { cur.classList.add("down"); });
+    document.addEventListener("mouseup", function () { cur.classList.remove("down"); });
     document.documentElement.addEventListener("mouseleave", function () {
       cur.style.opacity = "0";
       if (prev) prev.classList.remove("show");
@@ -157,14 +156,48 @@
   }
 })();
 
-/* page transitions: intercept same-site link clicks, sweep the veil in, then go.
-   the new page plays its own reveal on load (CSS, no JS timing needed). */
+/* page transitions: the veil.
+   the inline head CSS paints every document covered by the veil from the
+   very first frame, so navigation is slate in, slate out, no flash at any
+   point. this script only runs the clock: hold while fonts settle, lift
+   the veil, and slide it back up before the old page leaves. */
 (function () {
   "use strict";
+  var root = document.documentElement;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var lift = function () {
+    root.classList.add("reveal");
+    root.classList.remove("boot");
+    window.setTimeout(function () { root.classList.remove("reveal"); }, 950);
+  };
+
+  if (reduced) {
+    root.classList.remove("boot");
+  } else {
+    var MIN = 1000;
+    var t0 = Date.now();
+    var fired = false;
+    var go = function () {
+      if (fired) return;
+      fired = true;
+      window.setTimeout(lift, Math.max(0, MIN - (Date.now() - t0)));
+    };
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(go);
+    } else {
+      window.addEventListener("load", go);
+    }
+    window.setTimeout(go, 2600); /* the veil never holds the page hostage */
+  }
+
   window.addEventListener("pageshow", function (e) {
-    if (e.persisted) document.documentElement.classList.add("bf");
+    if (e.persisted) {
+      root.classList.remove("boot", "reveal", "leaving");
+      root.classList.add("bf");
+    }
   });
+
   if (reduced) return;
   document.addEventListener("click", function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -178,7 +211,7 @@
     if (url.host !== location.host) return;
     if (url.pathname === location.pathname && url.search === location.search) return;
     e.preventDefault();
-    document.documentElement.classList.add("leaving");
-    setTimeout(function () { location.href = url.href; }, 330);
+    root.classList.add("leaving");
+    window.setTimeout(function () { location.href = url.href; }, 500);
   });
 })();
