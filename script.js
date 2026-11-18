@@ -111,7 +111,7 @@
     tick();
     document.addEventListener("mouseover", function (e) {
       if (!e.target || !e.target.closest) return;
-      var row = e.target.closest(".workrow");
+      var row = e.target.closest(".workrow, .tile, .witem");
       var link = e.target.closest("a,button");
       cur.classList.toggle("row", !!row);
       cur.classList.toggle("link", !row && !!link);

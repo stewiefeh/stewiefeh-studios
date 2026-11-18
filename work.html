@@ -10,18 +10,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261118k">
+<link rel="stylesheet" href="styles.css?v=20261118l">
 </head>
-<body>
+<body class="rail-page">
 
-<header class="site-head">
+<!-- compact top bar: mobile only -->
+<header class="site-head mobbar">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="stewiefeh studios, home">
       <svg viewBox="-3 -10 116 116" aria-hidden="true"><path d="M 91 17 C 85 5, 69 -1, 53 3 C 37 7, 29 19, 35 29 C 41 39, 59 39, 69 47 C 79 55, 81 71, 71 79 C 61 87, 43 87, 33 77" fill="none" stroke="#c4830e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M 84 24 C 78 12, 62 6, 46 10 C 30 14, 22 26, 28 36 C 34 46, 52 46, 62 54 C 72 62, 74 78, 64 86 C 54 94, 36 94, 26 84" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span class="brand-name">stewiefeh <span>studios</span></span>
     </a>
     <div class="head-actions">
-      <a class="btn btn-solid" href="contact.html">Start a project</a>
       <button class="menu-btn" aria-expanded="false" aria-controls="navpanel" aria-label="Menu"><i></i><i></i></button>
     </div>
   </div>
@@ -31,44 +31,80 @@
   <ul>
     <li><a class="nav-link" href="index.html"><b>Home</b><span>where it starts</span></a></li>
     <li><a class="nav-link" href="services.html"><b>Services</b><span>pricing, process, questions</span></a></li>
-    <li><a class="nav-link" href="work.html" aria-current="page"><b>Work</b><span>demo sites, built from zero</span></a></li>
+    <li><a class="nav-link" href="work.html" aria-current="page"><b>Work</b><span>builds, shown properly</span></a></li>
     <li><a class="nav-link" href="contact.html"><b>Contact</b><span>start a project</span></a></li>
   </ul>
-  <div class="nav-cta-row">
-    <a class="btn btn-amber" href="contact.html">Start a project</a>
-    <a class="btn btn-ghost" href="services.html">Pricing</a>
-  </div>
 </nav>
+
+<!-- fixed left rail: desktop only -->
+<aside class="rail" aria-label="Site">
+  <a class="brand" href="index.html" aria-label="stewiefeh studios, home">
+    <svg viewBox="-3 -10 116 116" aria-hidden="true"><path d="M 91 17 C 85 5, 69 -1, 53 3 C 37 7, 29 19, 35 29 C 41 39, 59 39, 69 47 C 79 55, 81 71, 71 79 C 61 87, 43 87, 33 77" fill="none" stroke="#c4830e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M 84 24 C 78 12, 62 6, 46 10 C 30 14, 22 26, 28 36 C 34 46, 52 46, 62 54 C 72 62, 74 78, 64 86 C 54 94, 36 94, 26 84" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="brand-name">stewiefeh<br><span>studios</span></span>
+  </a>
+  <nav class="rail-nav" aria-label="Main">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="work.html" aria-current="page">Work</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="rail-foot">
+    <p class="rail-avail"><i class="avail-dot" aria-hidden="true"></i>Open for new projects</p>
+    <a class="rail-mail" href="mailto:stephenfehon@gmail.com">stephenfehon@gmail.com</a>
+  </div>
+</aside>
 
 <main>
 
-  <section class="hero" style="padding-bottom:clamp(28px,4vw,48px)">
+  <section class="hero-rail">
     <div class="wrap">
-      <h1><span class="hm"><span><em class="accent">Work.</em></span></span></h1>
-      <p class="lede reveal d1">Every one designed from zero, and no two alike. These are demo projects: they show how differently a site can look and still be unmistakably yours.</p>
+      <h1 class="hero-display">
+        <span class="hm"><span>Every site built</span></span>
+        <span class="hm"><span class="serif-line">from zero.</span></span>
+      </h1>
+      <p class="lede reveal d1">These are demo projects, each designed from zero with a different idea behind it. <em class="voice">No two alike, and each unmistakably its own.</em> They show how differently a site can look while still doing its one job.</p>
     </div>
   </section>
 
   <section class="section" style="padding-top:0">
-    <div class="wrap">
-      <a class="workrow" data-preview="0" href="https://stewiefeh.github.io/tangent/">
-        <div class="wname"><b>Tangent</b><em>interactive one-pager</em></div>
-        <p>A concept site for a New York design studio: a shader background that reacts to the cursor, a scroll-pinned work gallery, and page-wipe transitions, all hand-written with no libraries.</p>
+    <div class="wrap-wide">
+
+      <a class="witem" data-preview="0" href="https://stewiefeh.github.io/tangent/">
+        <figure><img src="preview-tangent.jpg" alt="Tangent, a dark interactive one-pager with a shader background"></figure>
+        <div class="wi-copy">
+          <h2>Tangent</h2>
+          <p class="wi-kind">interactive one-pager</p>
+          <p>A concept site for a New York design studio: a shader background that reacts to the cursor, a scroll-pinned work gallery, and page-wipe transitions, all hand-written with no libraries.</p>
+          <span class="wi-go">View the live site</span>
+        </div>
       </a>
-      <a class="workrow" data-preview="1" href="https://stewiefeh.github.io/ardane/">
-        <div class="wname"><b>Ardane</b><em>interactive one-pager</em></div>
-        <p>A bronze-and-oak atelier concept in ink, bone, and brass: virtual smooth scroll, split-character typography, and clip-path reveals. Proof that quiet and animated are not opposites.</p>
+
+      <a class="witem wi-right" data-preview="1" href="https://stewiefeh.github.io/ardane/">
+        <figure><img src="preview-ardane.jpg" alt="Ardane, a bronze and oak atelier concept site"></figure>
+        <div class="wi-copy">
+          <h2>Ardane</h2>
+          <p class="wi-kind">atelier concept</p>
+          <p>A bronze-and-oak atelier in ink, bone, and brass: virtual smooth scroll, split-character typography, and clip-path reveals. Proof that quiet and animated are not opposites.</p>
+          <span class="wi-go">View the live site</span>
+        </div>
       </a>
-      <a class="workrow" data-preview="2" href="https://stewiefeh.github.io/kroma/">
-        <div class="wname"><b>Kroma</b><em>studio concept</em></div>
-        <p>A full-color digital studio concept that refuses to whisper. Built to show how much personality a single page can carry when color leads the design.</p>
+
+      <a class="witem" data-preview="2" href="https://stewiefeh.github.io/kroma/">
+        <figure><img src="preview-kroma.jpg" alt="Kroma, a full-color digital studio concept"></figure>
+        <div class="wi-copy">
+          <h2>Kroma</h2>
+          <p class="wi-kind">studio concept</p>
+          <p>A full-color digital studio that refuses to whisper. Built to show how much personality a single page can carry when color leads the design.</p>
+          <span class="wi-go">View the live site</span>
+        </div>
       </a>
+
     </div>
   </section>
 
-  <section class="band">
+  <section class="band band-slate">
     <div class="wrap">
-      <h2 class="ink">Your business could be the next <em class="accent">build.</em></h2>
+      <h2>Your business could be the next build.</h2>
       <p class="lede">A working sample of your own site, in your branding, before you pay anything.</p>
       <a class="btn btn-amber" href="contact.html">Start a project</a>
     </div>
@@ -76,7 +112,7 @@
 
 </main>
 
-<footer class="site-foot">
+<footer class="site-foot foot-dark">
   <div class="wrap">
     <div class="foot-mark" aria-hidden="true">stewiefeh studios<span class="fm-dot">.</span><span class="fm-year">©26</span></div>
     <div class="foot-grid">
@@ -104,7 +140,7 @@
   </div>
 </footer>
 
-<script src="script.js?v=20261118k"></script>
+<script src="script.js?v=20261118l"></script>
 <div id="cursor" aria-hidden="true"><div class="c-dot"><span>view</span></div></div>
 <div id="preview" aria-hidden="true"><div class="p-card"><img src="preview-tangent.jpg" alt=""><img src="preview-ardane.jpg" alt=""><img src="preview-kroma.jpg" alt=""></div></div>
 </body>
