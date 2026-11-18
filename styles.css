@@ -695,3 +695,19 @@ html.fx-test #cursor,html.fx-test #preview{display:block !important}
     .case-figure,.case-body{animation:up .8s var(--ease) both;animation-timeline:view();animation-range:entry 0% entry 30%}
   }
 }
+
+/* =========================================================
+   polish pass: footer alignment under the rail
+   ========================================================= */
+/* the footer was a main sibling, so on desktop it slid under the
+   left rail and its wordmark clipped. Offset it like main. */
+@media (min-width:981px){
+  body.rail-page .site-foot{margin-left:var(--railw)}
+}
+/* size the giant wordmark against the footer's own width, not the
+   viewport, so it always fits its column exactly */
+.site-foot{container-type:inline-size}
+.foot-mark{font-size:clamp(2.4rem,9vw,7.35rem)}
+@supports (width: 1cqw){
+  .foot-mark{font-size:clamp(2.4rem,9.6cqw,7.35rem)}
+}
