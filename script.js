@@ -295,7 +295,7 @@
 
   if (reduced) return;
 
-  var COVER_MS = 460; /* a navigation cover is a bare slate wipe: hold only until the wipe lands */
+  var COVER_MS = 800; /* hold until the mark finishes its draw, then lift at once */
   var run = 0;
 
   var fetchPage = function (url, my, ok, bad) {
