@@ -369,7 +369,7 @@ p strong{color:var(--ink);font-weight:600}
 
 
 /* ---------- studio layer: scroll-ink headlines, cursor, work previews, magnetic ---------- */
-#cursor{display:none;position:fixed;left:0;top:0;z-index:80;pointer-events:none;will-change:transform}
+#cursor{display:none;position:fixed;left:0;top:0;z-index:500;pointer-events:none;will-change:transform}
 #preview{display:none;position:fixed;left:0;top:0;z-index:79;pointer-events:none;will-change:transform}
 @property --ink-p{syntax:"<percentage>";initial-value:0%;inherits:false}
 .ink{
@@ -773,10 +773,10 @@ html.boot,html.leaving{overflow:hidden}
 .veil-line{width:54px;height:2px;background:var(--amber);transform:scaleX(0);transform-origin:left;opacity:.85}
 
 /* boot: the mark draws on, the wordmark rises, the hairline sweeps */
-html.boot .veil-logo .lp-a{animation:lp-draw .6s cubic-bezier(.6,0,.2,1) .1s both}
-html.boot .veil-logo .lp-b{animation:lp-draw .65s cubic-bezier(.6,0,.2,1) .24s both}
-html.boot .veil-word{animation:veil-rise .5s var(--ease) .55s forwards}
-html.boot .veil-line{animation:veil-sweep .55s var(--ease) .6s forwards}
+html.boot .veil-logo .lp-a,html.leaving .veil-logo .lp-a{animation:lp-draw .6s cubic-bezier(.6,0,.2,1) .1s both}
+html.boot .veil-logo .lp-b,html.leaving .veil-logo .lp-b{animation:lp-draw .65s cubic-bezier(.6,0,.2,1) .24s both}
+html.boot .veil-word,html.leaving .veil-word{animation:veil-rise .5s var(--ease) .55s forwards}
+html.boot .veil-line,html.leaving .veil-line{animation:veil-sweep .55s var(--ease) .6s forwards}
 @keyframes lp-draw{from{stroke-dashoffset:198}to{stroke-dashoffset:0}}
 @keyframes veil-rise{to{opacity:1;transform:none}}
 @keyframes veil-sweep{to{transform:scaleX(1)}}

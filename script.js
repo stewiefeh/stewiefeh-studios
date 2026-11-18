@@ -91,7 +91,8 @@
   };
   var start = function () {
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (!fine) return;
+    var desktop = (navigator.maxTouchPoints || 0) === 0;
+    if (!fine && !desktop) return;
     var cur = document.getElementById("cursor");
     var prev = document.getElementById("preview");
     if (!cur) return;
@@ -159,7 +160,7 @@
   if (reduced) {
     root.classList.remove("boot");
   } else {
-    var MIN = 1000;
+    var MIN = 1250;
     var t0 = Date.now();
     var fired = false;
     var go = function () {
@@ -184,7 +185,7 @@
 
   if (reduced) return;
 
-  var COVER_MS = 480; /* matches the veil-cover animation */
+  var COVER_MS = 1250; /* the draw runs to its last stroke before the lift */
   var run = 0;
 
   var fetchPage = function (url, my, ok, bad) {
@@ -277,6 +278,10 @@
   var go = function (url, push) {
     var my = ++run;
     var t0 = Date.now();
+    var c = document.getElementById("cursor");
+    if (c) c.classList.remove("row", "link");
+    var pv = document.getElementById("preview");
+    if (pv) pv.classList.remove("show");
     root.classList.remove("boot", "reveal");
     root.classList.add("leaving");
     fetchPage(url, my,
