@@ -827,7 +827,7 @@ html,body{overflow-x:clip}
   position:fixed;inset:0;z-index:400;overflow:hidden;pointer-events:none;
   background:var(--slate);display:none;
 }
-html.boot .veil,html.leaving .veil{display:block}
+html.boot .veil,html.leaving .veil,html.reveal .veil{display:block}
 html.boot,html.leaving{overflow:hidden}
 .veil-in{
   position:absolute;inset:0;
