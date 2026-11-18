@@ -583,7 +583,7 @@ html.c-row #cursor .c-pill{width:68px;height:38px;opacity:1}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,1fr);gap:clamp(32px,5vw,72px);align-items:end}
 @media (max-width:1020px){.hero-grid{grid-template-columns:1fr;align-items:start}}
 
-/* the build-in moment: a sample site assembling itself, once, on load */
+/* the build-in moment: a sample site writing itself, looping every 9s */
 .buildcard{
   border:1px solid var(--line);border-radius:16px;background:#fff;
   box-shadow:0 24px 60px rgba(20,19,15,.09);overflow:hidden;
@@ -612,23 +612,149 @@ html.c-row #cursor .c-pill{width:68px;height:38px;opacity:1}
 }
 .bc-note{padding:10px 14px 13px;border-top:1px solid var(--line);font-size:.75rem;color:var(--faint)}
 @media (prefers-reduced-motion: no-preference){
-  .bc-nav,.bc-line,.bc-block,.bc-btn{
-    transform-origin:left;transform:scaleX(0);
-    animation:bcgrow .55s var(--ease) forwards;
+  /* the sample writes itself: lines type in with a riding caret, hold, then the page rebuilds. one 9s loop. */
+  .bc-nav,.bc-line,.bc-block,.bc-btn,.bc-caret{
+    animation-duration:9s;animation-iteration-count:infinite;animation-delay:.9s;animation-fill-mode:both;
   }
-  .bc-block{transform-origin:center;transform:scale(.9);opacity:0;animation-name:bcpop}
-  .bc-nav{animation-delay:.5s}
-  .bc-line.l1{animation-delay:.75s}
-  .bc-line.l2{animation-delay:.95s}
-  .bc-block{animation-delay:1.2s}
-  .bc-line.l3{animation-delay:1.45s}
-  .bc-line.l4{animation-delay:1.65s}
-  .bc-btn{animation-delay:1.9s}
-  .bc-caret{opacity:0;animation:bcblink 1.1s steps(1) 2.2s infinite, bcfadein .3s ease 2.05s forwards}
-  @keyframes bcgrow{to{transform:scaleX(1)}}
-  @keyframes bcpop{to{transform:scale(1);opacity:1}}
-  @keyframes bcfadein{to{opacity:1}}
-  @keyframes bcblink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .bc-nav{--w:34%;width:0;animation-name:bcw-nav}
+  .bc-line{position:relative}
+  .bc-line.l1{--w:82%;width:0;animation-name:bcw-l1}
+  .bc-line.l2{--w:58%;width:0;animation-name:bcw-l2}
+  .bc-line.l3{--w:74%;width:0;animation-name:bcw-l3}
+  .bc-line.l4{--w:46%;width:0;animation-name:bcw-l4}
+  .bc-block{transform:scale(.9);opacity:0;animation-name:bcw-block}
+  .bc-btn{position:relative;transform:scale(.6);opacity:0;animation-name:bcw-btn}
+  .bc-caret{opacity:0;animation-name:bcw-caret}
+  .bc-nav::after,.bc-line::after,.bc-btn::after{
+    content:"";position:absolute;right:3px;top:50%;width:2px;height:18px;
+    transform:translateY(-50%);background:var(--ink);opacity:0;
+    animation-duration:9s;animation-iteration-count:infinite;animation-delay:.9s;animation-timing-function:linear;
+  }
+  .bc-nav::after{animation-name:bcc-nav}
+  .bc-line.l1::after{animation-name:bcc-l1}
+  .bc-line.l2::after{animation-name:bcc-l2}
+  .bc-line.l3::after{animation-name:bcc-l3}
+  .bc-line.l4::after{animation-name:bcc-l4}
+  .bc-btn::after{height:14px;animation-name:bcc-btn}
+  @keyframes bcw-nav{
+    0%{width:0;opacity:1}
+    1%{width:0;animation-timing-function:steps(5,end)}
+    6.5%{width:var(--w)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{width:0}
+    100%{width:0;opacity:0}
+  }
+  @keyframes bcw-l1{
+    0%{width:0;opacity:1}
+    8%{width:0;animation-timing-function:steps(14,end)}
+    15%{width:var(--w)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{width:0}
+    100%{width:0;opacity:0}
+  }
+  @keyframes bcw-l2{
+    0%{width:0;opacity:1}
+    16.5%{width:0;animation-timing-function:steps(12,end)}
+    23%{width:var(--w)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{width:0}
+    100%{width:0;opacity:0}
+  }
+  @keyframes bcw-block{
+    0%{transform:scale(.9);opacity:0}
+    24.5%{transform:scale(.9);opacity:0;animation-timing-function:cubic-bezier(.2,.65,.15,1)}
+    27.5%{transform:scale(1.03);opacity:1}
+    29%{transform:scale(1)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{transform:scale(.9)}
+    100%{transform:scale(.9);opacity:0}
+  }
+  @keyframes bcw-l3{
+    0%{width:0;opacity:1}
+    30.5%{width:0;animation-timing-function:steps(13,end)}
+    37.5%{width:var(--w)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{width:0}
+    100%{width:0;opacity:0}
+  }
+  @keyframes bcw-l4{
+    0%{width:0;opacity:1}
+    39%{width:0;animation-timing-function:steps(9,end)}
+    44%{width:var(--w)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{width:0}
+    100%{width:0;opacity:0}
+  }
+  @keyframes bcw-btn{
+    0%{transform:scale(.6);opacity:0}
+    46%{transform:scale(.6);opacity:0;animation-timing-function:cubic-bezier(.2,.65,.15,1)}
+    48.5%{transform:scale(1.06);opacity:1}
+    50%{transform:scale(1)}
+    91.5%{opacity:1}
+    93.5%{opacity:0}
+    94.5%{transform:scale(.6)}
+    100%{transform:scale(.6);opacity:0}
+  }
+  @keyframes bcw-caret{
+    0%,51.5%{opacity:0}
+    52%{opacity:1}
+    57.6%{opacity:0}
+    63.7%{opacity:1}
+    69.8%{opacity:0}
+    75.9%{opacity:1}
+    82%{opacity:0}
+    88.1%{opacity:1}
+    89.8%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-nav{
+    0%{opacity:0}
+    .8%{opacity:1}
+    6%{opacity:1}
+    6.8%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-l1{
+    0%{opacity:0}
+    7.8%{opacity:1}
+    14.6%{opacity:1}
+    15.4%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-l2{
+    0%{opacity:0}
+    16.3%{opacity:1}
+    22.6%{opacity:1}
+    23.4%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-l3{
+    0%{opacity:0}
+    30.3%{opacity:1}
+    37.1%{opacity:1}
+    37.9%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-l4{
+    0%{opacity:0}
+    38.8%{opacity:1}
+    43.6%{opacity:1}
+    44.4%{opacity:0}
+    100%{opacity:0}
+  }
+  @keyframes bcc-btn{
+    0%{opacity:0}
+    45.8%{opacity:1}
+    49.6%{opacity:1}
+    50.4%{opacity:0}
+    100%{opacity:0}
+  }
 }
 
 /* ---------- case tiles: full-width, alternating ---------- */
